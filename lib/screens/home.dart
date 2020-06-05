@@ -11,7 +11,7 @@ class HomeScreen extends StatelessWidget {
         children: <Widget>[
           DiceryIconButton(
             label: "Create a Room",
-            iconData: Icons.create,
+            iconData: Icons.group_add,
             onPressed: () {
               print("Create a room!");
             },
@@ -22,7 +22,7 @@ class HomeScreen extends StatelessWidget {
             onPressed: () {
               Navigator.pushNamed(context, '/room/join');
             },
-            iconData: Icons.add,
+            iconData: Icons.group,
             label: "Join a Room",
           ),
         ],
