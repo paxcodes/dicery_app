@@ -18,7 +18,10 @@ class HomeScreen extends StatelessWidget {
           ),
           SizedBox(height: 30),
           DiceryIconButton(
-            onPressed: () {},
+            isPrimary: false,
+            onPressed: () {
+              print("Join a room!");
+            },
             iconData: Icons.add,
             label: "Join a Room",
           ),
