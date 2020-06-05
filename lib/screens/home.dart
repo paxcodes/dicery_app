@@ -1,3 +1,4 @@
+import 'package:dicery/components/button.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -8,16 +9,18 @@ class HomeScreen extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          RaisedButton.icon(
-            onPressed: () {},
-            icon: Icon(Icons.create),
-            label: Text("Create a Room"),
+          DiceryIconButton(
+            label: "Create a Room",
+            iconData: Icons.create,
+            onPressed: () {
+              print("Create a room!");
+            },
           ),
           SizedBox(height: 30),
-          RaisedButton.icon(
+          DiceryIconButton(
             onPressed: () {},
-            icon: Icon(Icons.add),
-            label: Text("Join a Room"),
+            iconData: Icons.add,
+            label: "Join a Room",
           ),
         ],
       ),
