@@ -1,3 +1,4 @@
+import 'package:dicery/screens/create_room.dart';
 import 'package:dicery/screens/lobby.dart';
 import 'package:flutter/material.dart';
 import 'package:dicery/screens/home.dart';
@@ -26,6 +27,7 @@ class DiceryApp extends StatelessWidget {
         routes: {
           '/': (context) => HomeScreen(),
           '/room/join': (context) => JoinRoomScreen(),
+          '/room/create': (context) => CreateRoomScreen(),
           '/lobby': (context) => LobbyScreen(),
         });
   }

@@ -13,7 +13,7 @@ class HomeScreen extends StatelessWidget {
             label: "Create a Room",
             iconData: Icons.group_add,
             onPressed: () {
-              print("Create a room!");
+              Navigator.pushNamed(context, '/room/create');
             },
           ),
           SizedBox(height: 30),
