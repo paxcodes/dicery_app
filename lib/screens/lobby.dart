@@ -1,5 +1,8 @@
-import 'package:dicery/components/button.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+import 'package:dicery/components/button.dart';
+import 'package:dicery/components/player_card.dart';
 
 class LobbyScreen extends StatelessWidget {
   @override
@@ -19,23 +22,10 @@ class LobbyScreen extends StatelessWidget {
             SizedBox(height: 50),
             Text("Waiting for other players..."),
             Expanded(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+              child: ListView(
                 children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 10.0),
-                    child: Text(
-                      "Dakota joined the room! 🎉",
-                      style: TextStyle(fontSize: 20),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 10.0),
-                    child: Text(
-                      "Jordan joined the room! 🎉",
-                      style: TextStyle(fontSize: 20),
-                    ),
-                  )
+                  PlayerCard(emoji: "💯", name: "Dakota"),
+                  PlayerCard(emoji: "🎉", name: "Jordan"),
                 ],
               ),
             ),
