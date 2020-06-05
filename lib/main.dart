@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:dicery/screens/join_room.dart';
+import 'package:dicery/screens/home.dart';
 
 void main() {
   runApp(DiceryApp());
@@ -19,7 +19,7 @@ class DiceryApp extends StatelessWidget {
         // closer together (more dense) than on mobile platforms.
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: JoinRoomScreen(),
+      home: HomeScreen(),
     );
   }
 }
