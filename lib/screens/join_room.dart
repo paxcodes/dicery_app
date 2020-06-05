@@ -1,3 +1,4 @@
+import 'package:dicery/components/button.dart';
 import 'package:flutter/material.dart';
 import 'package:dicery/styles.dart' as Styles;
 
@@ -29,6 +30,13 @@ class JoinRoomScreen extends StatelessWidget {
               ),
               decoration: Styles.TextField.copyWith(hintText: "Name"),
             ),
+            SizedBox(height: 20),
+            DiceryIconButton(
+              isPrimary: true,
+              label: "Join Room",
+              iconData: Icons.group,
+              onPressed: () {},
+            )
           ],
         ),
       ),
