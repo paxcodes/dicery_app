@@ -20,7 +20,7 @@ class HomeScreen extends StatelessWidget {
           DiceryIconButton(
             isPrimary: false,
             onPressed: () {
-              print("Join a room!");
+              Navigator.pushNamed(context, '/room/join');
             },
             iconData: Icons.add,
             label: "Join a Room",
