@@ -35,7 +35,14 @@ class JoinRoomScreen extends StatelessWidget {
               isPrimary: true,
               label: "Join Room",
               iconData: Icons.group,
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pushNamedAndRemoveUntil(
+                  context,
+                  '/lobby',
+                  // Clear navigation history
+                  (_) => false,
+                );
+              },
             )
           ],
         ),
