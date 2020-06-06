@@ -8,7 +8,8 @@ import 'package:dicery/components/player_card.dart';
 class LobbyScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Material(
+    return Container(
+      padding: EdgeInsets.all(16),
       color: Theme.of(context).accentColor,
       child: SafeArea(
         child: Column(
