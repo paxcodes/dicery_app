@@ -1,3 +1,4 @@
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -20,7 +21,15 @@ class LobbyScreen extends StatelessWidget {
                     )),
             Text("by Sean Williams"),
             SizedBox(height: 50),
-            Text("Waiting for other players..."),
+            TypewriterAnimatedTextKit(
+              text: ['Waiting for other players'],
+              textStyle: TextStyle(
+                fontSize: 45,
+                fontWeight: FontWeight.w900,
+              ),
+              speed: Duration(milliseconds: 100),
+              totalRepeatCount: -1,
+            ),
             Expanded(
               child: ListView(
                 children: <Widget>[
