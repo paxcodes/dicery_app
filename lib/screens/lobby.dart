@@ -20,14 +20,14 @@ class LobbyScreen extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                       color: Colors.teal.shade100,
                     )),
-            Text("by Sean Williams"),
+            Text(
+              "by Sean Williams",
+              style: Theme.of(context).textTheme.subtitle1,
+            ),
             SizedBox(height: 50),
             TypewriterAnimatedTextKit(
               text: ['Waiting for other players'],
-              textStyle: TextStyle(
-                fontSize: 45,
-                fontWeight: FontWeight.w900,
-              ),
+              textStyle: Theme.of(context).textTheme.headline6,
               speed: Duration(milliseconds: 100),
               totalRepeatCount: -1,
             ),
