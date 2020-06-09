@@ -14,13 +14,17 @@ class LobbyScreen extends StatelessWidget {
     List<Widget> children = [
       Text("Room F4K3R",
           style: Theme.of(context).textTheme.headline1.copyWith(
-                fontSize: 40,
+                fontSize: 50,
+                fontFamily: 'RobotoMono',
                 fontWeight: FontWeight.bold,
                 color: Colors.teal.shade100,
               )),
       Text(
         "by Sean Williams",
-        style: Theme.of(context).textTheme.subtitle1,
+        style: Theme.of(context)
+            .textTheme
+            .subtitle1
+            .copyWith(color: Colors.teal.shade100),
       ),
       SizedBox(height: 50),
       SizedBox(
@@ -28,9 +32,11 @@ class LobbyScreen extends StatelessWidget {
         child: TypewriterAnimatedTextKit(
           text: ['waiting for other players'],
           textStyle: Theme.of(context).textTheme.headline6.copyWith(
-              fontFamily: "RobotoMono",
-              fontSize: 20,
-              fontWeight: FontWeight.w300),
+                fontFamily: "RobotoMono",
+                fontSize: 20,
+                fontWeight: FontWeight.w300,
+                color: Colors.teal.shade100,
+              ),
           speed: Duration(milliseconds: 100),
           totalRepeatCount: -1,
         ),
