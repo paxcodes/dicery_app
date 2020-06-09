@@ -28,8 +28,11 @@ class LobbyScreen extends StatelessWidget {
             SizedBox(
               width: 380,
               child: TypewriterAnimatedTextKit(
-                text: ['Waiting for other players'],
-                textStyle: Theme.of(context).textTheme.headline6,
+                text: ['waiting for other players'],
+                textStyle: Theme.of(context).textTheme.headline6.copyWith(
+                    fontFamily: "RobotoMono",
+                    fontSize: 20,
+                    fontWeight: FontWeight.w300),
                 speed: Duration(milliseconds: 100),
                 totalRepeatCount: -1,
               ),
