@@ -9,6 +9,7 @@ class PlayerCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      margin: EdgeInsets.symmetric(vertical: 10),
       child: ListTile(
         leading: Padding(
           padding: const EdgeInsets.only(right: 10.0),
