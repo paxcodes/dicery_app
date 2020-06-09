@@ -34,6 +34,7 @@ class LobbyScreen extends StatelessWidget {
                 totalRepeatCount: -1,
               ),
             ),
+            SizedBox(height: 20),
             Expanded(
               child: ListView(
                 children: <Widget>[
