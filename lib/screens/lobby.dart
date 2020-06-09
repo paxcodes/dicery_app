@@ -55,7 +55,9 @@ class LobbyScreen extends StatelessWidget {
     if (isOwnedByUser) {
       children.add(DiceryIconButton(
         label: "Everyone's in",
-        onPressed: () {},
+        onPressed: () {
+          Navigator.pushNamed(context, '/room');
+        },
         iconData: Icons.forward,
       ));
     }
