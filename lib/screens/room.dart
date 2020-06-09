@@ -1,10 +1,12 @@
-import 'package:dicery/components/button.dart';
 import 'package:flutter/material.dart';
+import 'package:dicery/components/dice_form.dart';
+import 'package:dicery/components/dice_roll_result.dart';
 
 class RoomScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return Material(
+      child: Container(
         padding: EdgeInsets.all(16),
         color: Colors.tealAccent.shade100,
         child: SafeArea(
@@ -25,13 +27,12 @@ class RoomScreen extends StatelessWidget {
                     .copyWith(color: Colors.teal.shade900),
               ),
               SizedBox(height: 50),
-              DiceryIconButton(
-                label: "Roll Dice",
-                iconData: Icons.refresh,
-                onPressed: () {},
-              )
+              DiceForm(),
+              DiceRollResult(),
             ],
           ),
-        ));
+        ),
+      ),
+    );
   }
 }
