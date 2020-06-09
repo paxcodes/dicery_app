@@ -41,6 +41,9 @@ class JoinRoomScreen extends StatelessWidget {
                   '/lobby',
                   // Clear navigation history
                   (_) => false,
+                  arguments: <String, bool>{
+                    'isOwnedByUser': false,
+                  },
                 );
               },
             )

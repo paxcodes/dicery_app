@@ -34,6 +34,9 @@ class CreateRoomScreen extends StatelessWidget {
                   '/lobby',
                   // Clear navigation history
                   (_) => false,
+                  arguments: <String, bool>{
+                    'isOwnedByUser': true,
+                  },
                 );
               },
             )
