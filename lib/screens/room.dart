@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:dicery/components/dice_form.dart';
 import 'package:dicery/components/dice_roll_result.dart';
+import 'package:dicery/components/dice_roll_history.dart';
 
 class RoomScreen extends StatelessWidget {
   @override
@@ -29,6 +30,7 @@ class RoomScreen extends StatelessWidget {
               SizedBox(height: 50),
               DiceForm(),
               DiceRollResult(),
+              DiceRollHistory(),
             ],
           ),
         ),
