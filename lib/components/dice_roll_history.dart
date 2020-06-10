@@ -6,7 +6,7 @@ class DiceRollHistory extends StatelessWidget {
   final List<RollEntry> _rolls = [
     RollEntry(
         player: "Dakota",
-        rolls: [1, 2, 3, 4],
+        rolls: [1, 2, 3, 4, 14],
         date: DateTime(2020, 1, 2, 6, 1)),
     RollEntry(
         player: "Jordan",
@@ -33,7 +33,14 @@ class DiceRollHistory extends StatelessWidget {
               color: PlayerColourizer.getColor(_rolls[index].player),
             ),
           ),
-          title: Text(_rolls[index].rolls.toString()),
+          title: Text(
+            _rolls[index].rolls.join(" "),
+            style: TextStyle(
+              wordSpacing: 15,
+              fontFamily: 'RobotoMono',
+              fontSize: 20,
+            ),
+          ),
           subtitle: Text(_rolls[index].date.toIso8601String()),
         ),
       ),
