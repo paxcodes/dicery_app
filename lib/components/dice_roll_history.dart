@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:dicery/models/roll_entry.dart';
-import 'package:dicery/utilities/player_colourizer.dart';
+import 'package:dicery/components/roll_entry_list_item.dart';
 
 class DiceRollHistory extends StatelessWidget {
   final List<RollEntry> _rolls = [
@@ -24,25 +24,7 @@ class DiceRollHistory extends StatelessWidget {
     return Expanded(
       child: ListView.builder(
         itemCount: _rolls.length,
-        itemBuilder: (context, index) => ListTile(
-          leading: Text(
-            _rolls[index].player,
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-              color: PlayerColourizer.getColor(_rolls[index].player),
-            ),
-          ),
-          title: Text(
-            _rolls[index].rolls.join(" "),
-            style: TextStyle(
-              wordSpacing: 15,
-              fontFamily: 'RobotoMono',
-              fontSize: 20,
-            ),
-          ),
-          subtitle: Text(_rolls[index].date.toIso8601String()),
-        ),
+        itemBuilder: (context, index) => RollEntryListItem(_rolls[index]),
       ),
     );
   }
