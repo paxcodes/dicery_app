@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:dicery/models/roll_entry.dart';
 import 'package:dicery/utilities/player_colourizer.dart';
+import 'package:timeago_flutter/timeago_flutter.dart';
 
 class RollEntryListItem extends StatelessWidget {
   RollEntryListItem(this.rollEntry);
@@ -25,7 +26,10 @@ class RollEntryListItem extends StatelessWidget {
           fontSize: 20,
         ),
       ),
-      subtitle: Text(rollEntry.date.toIso8601String()),
+      subtitle: Timeago(
+        builder: (_, value) => Text(value),
+        date: rollEntry.date,
+      ),
     );
   }
 }
