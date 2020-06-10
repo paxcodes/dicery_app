@@ -185,12 +185,19 @@ packages:
     source: hosted
     version: "0.2.15"
   timeago:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: timeago
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.26"
+  timeago_flutter:
+    dependency: "direct main"
+    description:
+      name: timeago_flutter
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.0"
   typed_data:
     dependency: transitive
     description:
