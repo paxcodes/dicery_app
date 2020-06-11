@@ -19,17 +19,25 @@ class _DiceFormState extends State<DiceForm> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        NumberPicker.horizontal(
-          initialValue: _diceCt,
-          minValue: 1,
-          maxValue: 12,
-          onChanged: (num number) {
-            print(number);
-            setState(() {
-              _diceCt = number;
-            });
-          },
-          itemExtent: 80,
+        Row(
+          children: <Widget>[
+            Text(
+              "# of Dice",
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+            NumberPicker.horizontal(
+              initialValue: _diceCt,
+              minValue: 1,
+              maxValue: 12,
+              onChanged: (num number) {
+                print(number);
+                setState(() {
+                  _diceCt = number;
+                });
+              },
+              itemExtent: 80,
+            ),
+          ],
         ),
         DiceryIconButton.primary(
           label: "Roll Dice",
