@@ -17,6 +17,7 @@ class DiceryApp extends StatelessWidget {
         title: 'Dicery',
         theme: ThemeData(
           backgroundColor: Color(0xffedf2f4),
+          primaryColor: Color(0xFF2b2d42),
           accentColor: Color(0xFFD90429),
           // This makes the visual density adapt to the platform that you run
           // the app on. For desktop platforms, the controls will be smaller and
