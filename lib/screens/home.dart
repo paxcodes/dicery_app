@@ -1,4 +1,5 @@
-import 'package:dicery/components/button.dart';
+import 'package:dicery/components/buttons/base_button.dart';
+import 'package:dicery/components/buttons/primary_button.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -9,7 +10,7 @@ class HomeScreen extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          DiceryIconButton(
+          PrimaryDiceryButton(
             label: "Create a Room",
             iconData: Icons.group_add,
             onPressed: () {
@@ -18,7 +19,6 @@ class HomeScreen extends StatelessWidget {
           ),
           SizedBox(height: 30),
           DiceryIconButton(
-            isPrimary: false,
             onPressed: () {
               Navigator.pushNamed(context, '/room/join');
             },

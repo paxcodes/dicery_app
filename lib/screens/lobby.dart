@@ -2,7 +2,7 @@ import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'package:dicery/components/button.dart';
+import 'package:dicery/components/buttons/base_button.dart';
 import 'package:dicery/components/player_card.dart';
 
 class LobbyScreen extends StatelessWidget {

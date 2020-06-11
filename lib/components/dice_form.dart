@@ -1,4 +1,5 @@
-import 'package:dicery/components/button.dart';
+import 'package:dicery/components/buttons/base_button.dart';
+import 'package:dicery/components/buttons/primary_button.dart';
 import 'package:numberpicker/numberpicker.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
@@ -30,7 +31,7 @@ class _DiceFormState extends State<DiceForm> {
             });
           },
         ),
-        DiceryIconButton(
+        PrimaryDiceryButton(
           label: "Roll Dice",
           iconData: Icons.refresh,
           onPressed: () {
