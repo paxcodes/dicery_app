@@ -15,7 +15,7 @@ class RollEntryListItem extends StatelessWidget {
         style: TextStyle(
           fontSize: 20,
           fontWeight: FontWeight.bold,
-          color: PlayerColourizer.getColor(rollEntry.player),
+          color: PlayerColourizer.getTextColor(rollEntry.player),
         ),
       ),
       title: Text(

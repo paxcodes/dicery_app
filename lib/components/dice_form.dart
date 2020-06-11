@@ -1,4 +1,4 @@
-import 'package:dicery/components/button.dart';
+import 'package:dicery/components/buttons/base_button.dart';
 import 'package:numberpicker/numberpicker.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
@@ -19,18 +19,27 @@ class _DiceFormState extends State<DiceForm> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        NumberPicker.integer(
-          initialValue: _diceCt,
-          minValue: 1,
-          maxValue: 12,
-          onChanged: (num number) {
-            print(number);
-            setState(() {
-              _diceCt = number;
-            });
-          },
+        Row(
+          children: <Widget>[
+            Text(
+              "# of Dice",
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+            NumberPicker.horizontal(
+              initialValue: _diceCt,
+              minValue: 1,
+              maxValue: 12,
+              onChanged: (num number) {
+                print(number);
+                setState(() {
+                  _diceCt = number;
+                });
+              },
+              itemExtent: 80,
+            ),
+          ],
         ),
-        DiceryIconButton(
+        DiceryIconButton.primary(
           label: "Roll Dice",
           iconData: Icons.refresh,
           onPressed: () {
