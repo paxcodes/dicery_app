@@ -17,7 +17,7 @@ class DiceryIconButton extends StatelessWidget {
         color: isPrimary ? Colors.teal.shade900 : Colors.teal.shade100,
         onPressed: onPressed,
         shape:
-            ContinuousRectangleBorder(borderRadius: BorderRadius.circular(150)),
+            ContinuousRectangleBorder(borderRadius: BorderRadius.circular(20)),
         padding: EdgeInsets.symmetric(vertical: 20, horizontal: 40),
         icon: Icon(
           iconData,
