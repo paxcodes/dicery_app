@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 class RollEntry {
   final String player;
   final List<int> rolls;
