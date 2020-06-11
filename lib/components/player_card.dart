@@ -24,16 +24,13 @@ class PlayerCard extends StatelessWidget {
           children: <Widget>[
             Text(name[0],
                 style: TextStyle(
-                  backgroundColor: Colors.white,
                   fontSize: 50,
                   fontWeight: FontWeight.w500,
-                  color: Colors.teal.shade900,
                 )),
             Text(
               name.substring(1),
               style: TextStyle(
                 fontSize: 35,
-                color: Colors.teal.shade900,
               ),
             ),
           ],

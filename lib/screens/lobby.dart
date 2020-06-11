@@ -22,14 +22,10 @@ class LobbyScreen extends StatelessWidget {
                         fontSize: 50,
                         fontFamily: 'RobotoMono',
                         fontWeight: FontWeight.bold,
-                        color: Colors.teal.shade100,
                       )),
               Text(
                 "by Sean Williams",
-                style: Theme.of(context)
-                    .textTheme
-                    .subtitle1
-                    .copyWith(color: Colors.teal.shade100),
+                style: Theme.of(context).textTheme.subtitle1,
               ),
               SizedBox(height: 50),
               SizedBox(
@@ -40,7 +36,6 @@ class LobbyScreen extends StatelessWidget {
                         fontFamily: "RobotoMono",
                         fontSize: 20,
                         fontWeight: FontWeight.w300,
-                        color: Colors.teal.shade100,
                       ),
                   speed: Duration(milliseconds: 100),
                   totalRepeatCount: -1,
@@ -56,7 +51,7 @@ class LobbyScreen extends StatelessWidget {
                 ),
               ),
               if (isOwnedByUser)
-                DiceryIconButton(
+                DiceryIconButton.primary(
                   label: "Everyone's in",
                   onPressed: () {
                     Navigator.pushNamed(context, '/room');
