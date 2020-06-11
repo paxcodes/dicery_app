@@ -27,7 +27,6 @@ class DiceRollResult extends StatelessWidget {
                   style: TextStyle(
                     fontFamily: "RobotoMono",
                     fontSize: 30,
-                    color: Colors.teal.shade900,
                   ),
                 ),
               ))
