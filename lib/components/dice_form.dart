@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 import 'dart:math';
 
 class DiceForm extends StatefulWidget {
+  final int maxDice = 6;
+  final int minDice = 1;
+
   const DiceForm({
     Key key,
   }) : super(key: key);
@@ -27,8 +30,8 @@ class _DiceFormState extends State<DiceForm> {
             ),
             NumberPicker(
               initialValue: _diceCt,
-              minValue: 1,
-              maxValue: 12,
+              minValue: widget.minDice,
+              maxValue: widget.maxDice,
               onChanged: (num number) {
                 print(number);
                 setState(() {
