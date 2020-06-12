@@ -32,6 +32,17 @@ class NumberPicker extends StatelessWidget {
         listViewWidth = 3 * itemExtent,
         integerItemCount = (maxValue - minValue) ~/ step + 1;
 
+  bool _onScrollNotification(ScrollNotification notification) {
+    int intValueInTheMiddle =
+        (notification.metrics.pixels / itemExtent).round() + 1;
+    print(
+        "(notification.metrics.pixels / itemExtent).round() $intValueInTheMiddle");
+    if (intValueInTheMiddle != selectedIntValue) {
+      onChanged(intValueInTheMiddle);
+    }
+    return true;
+  }
+
   @override
   Widget build(BuildContext context) {
     // We need to pad the list so we can "select" the first
@@ -39,40 +50,43 @@ class NumberPicker extends StatelessWidget {
     int theExtraItemsOnTheBeginningAndEnding = 2;
     int listItemCount = integerItemCount + theExtraItemsOnTheBeginningAndEnding;
 
-    return Container(
-      height: listViewHeight,
-      width: listViewWidth,
-      child: Stack(
-        children: [
-          ListView.builder(
-            scrollDirection: Axis.horizontal,
-            // todo `controller` prop
-            // todo `cacheExtent`
-            itemExtent: itemExtent,
-            // todo different from numberpicker. numberpicker has extra 2 items ?
-            itemCount: listItemCount,
-            itemBuilder: (context, index) {
-              // todo different from numberpicker. numberpicker has
-              // to consider `step`
-              final int value = index;
+    return NotificationListener<ScrollNotification>(
+      onNotification: _onScrollNotification,
+      child: Container(
+        height: listViewHeight,
+        width: listViewWidth,
+        child: Stack(
+          children: [
+            ListView.builder(
+              scrollDirection: Axis.horizontal,
+              // todo `controller` prop
+              // todo `cacheExtent`
+              itemExtent: itemExtent,
+              // todo different from numberpicker. numberpicker has extra 2 items ?
+              itemCount: listItemCount,
+              itemBuilder: (context, index) {
+                // todo different from numberpicker. numberpicker has
+                // to consider `step`
+                final int value = index;
 
-              final ThemeData themeData = Theme.of(context);
-              TextStyle defaultStyle = themeData.textTheme.bodyText1;
-              TextStyle selectedStyle = themeData.textTheme.headline5
-                  .copyWith(color: themeData.accentColor);
-              final TextStyle itemStyle =
-                  value == selectedIntValue ? selectedStyle : defaultStyle;
+                final ThemeData themeData = Theme.of(context);
+                TextStyle defaultStyle = themeData.textTheme.bodyText1;
+                TextStyle selectedStyle = themeData.textTheme.headline5
+                    .copyWith(color: themeData.accentColor);
+                final TextStyle itemStyle =
+                    value == selectedIntValue ? selectedStyle : defaultStyle;
 
-              final edgeItems = index == 0 || index == listItemCount - 1;
+                final edgeItems = index == 0 || index == listItemCount - 1;
 
-              return edgeItems
-                  ? Container()
-                  : Center(
-                      child: Text(value.toString(), style: itemStyle),
-                    );
-            },
-          ),
-        ],
+                return edgeItems
+                    ? Container()
+                    : Center(
+                        child: Text(value.toString(), style: itemStyle),
+                      );
+              },
+            ),
+          ],
+        ),
       ),
     );
   }
