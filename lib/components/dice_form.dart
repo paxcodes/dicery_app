@@ -1,5 +1,5 @@
 import 'package:dicery/components/buttons/base_button.dart';
-import 'package:numberpicker/numberpicker.dart';
+import 'package:dicery/components/number_picker.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
 
@@ -25,7 +25,7 @@ class _DiceFormState extends State<DiceForm> {
               "# of Dice",
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
-            NumberPicker.horizontal(
+            NumberPicker(
               initialValue: _diceCt,
               minValue: 1,
               maxValue: 12,
