@@ -35,8 +35,8 @@ class NumberPicker extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 3 * itemExtent,
-      width: 100,
+      height: listViewHeight,
+      width: listViewWidth,
       child: Stack(
         children: [
           ListView.builder(
