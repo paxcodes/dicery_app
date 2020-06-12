@@ -34,6 +34,11 @@ class NumberPicker extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // We need to pad the list so we can "select" the first
+    // and last item.
+    int theExtraItemsOnTheBeginningAndEnding = 2;
+    int listItemCount = integerItemCount + theExtraItemsOnTheBeginningAndEnding;
+
     return Container(
       height: listViewHeight,
       width: listViewWidth,
@@ -45,11 +50,11 @@ class NumberPicker extends StatelessWidget {
             // todo `cacheExtent`
             itemExtent: itemExtent,
             // todo different from numberpicker. numberpicker has extra 2 items ?
-            itemCount: integerItemCount,
+            itemCount: listItemCount,
             itemBuilder: (context, index) {
               // todo different from numberpicker. numberpicker has
               // to consider `step`
-              final int value = index + 1;
+              final int value = index;
 
               final ThemeData themeData = Theme.of(context);
               TextStyle defaultStyle = themeData.textTheme.bodyText1;
@@ -58,9 +63,13 @@ class NumberPicker extends StatelessWidget {
               final TextStyle itemStyle =
                   value == selectedIntValue ? selectedStyle : defaultStyle;
 
-              return Center(
-                child: Text(value.toString(), style: itemStyle),
-              );
+              final edgeItems = index == 0 || index == listItemCount - 1;
+
+              return edgeItems
+                  ? Container()
+                  : Center(
+                      child: Text(value.toString(), style: itemStyle),
+                    );
             },
           ),
         ],
