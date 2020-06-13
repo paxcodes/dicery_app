@@ -7,8 +7,7 @@ class NumberPicker extends StatelessWidget {
   final int selectedIntValue;
   final int minValue;
   final int maxValue;
-  final double listViewWidth;
-  final double listViewHeight = kDefaultListViewCrossAxisSize;
+  final double listViewHeight;
   final double itemExtent;
   final int step;
   final Axis scrollDirection = Axis.horizontal;
@@ -17,6 +16,7 @@ class NumberPicker extends StatelessWidget {
   final ScrollController intScrollController;
   final Function onChanged;
   final int integerItemCount;
+  final int visibleItemCount;
   final TextStyle itemStyle;
   final TextStyle selectedStyle;
 
@@ -29,11 +29,12 @@ class NumberPicker extends StatelessWidget {
     this.step = 1,
     this.itemStyle,
     this.selectedStyle,
+    this.listViewHeight = kDefaultListViewCrossAxisSize,
+    this.visibleItemCount = 3,
   })  : selectedIntValue = initialValue,
         intScrollController = ScrollController(
           initialScrollOffset: (initialValue - minValue) ~/ step * itemExtent,
         ),
-        listViewWidth = 3 * itemExtent,
         integerItemCount = (maxValue - minValue) ~/ step + 1;
 
   bool _onScrollNotification(ScrollNotification notification) {
@@ -56,7 +57,7 @@ class NumberPicker extends StatelessWidget {
       onNotification: _onScrollNotification,
       child: Container(
         height: listViewHeight,
-        width: listViewWidth,
+        width: visibleItemCount * itemExtent,
         child: Stack(
           children: [
             ListView.builder(
