@@ -43,6 +43,14 @@ class _DiceFormState extends State<DiceForm> {
                 color: themeData.accentColor,
                 fontWeight: FontWeight.bold,
               ),
+              decoration: BoxDecoration(
+                border: Border.symmetric(
+                  vertical: BorderSide(
+                    color: themeData.primaryColor,
+                    width: 0.5,
+                  ),
+                ),
+              ),
               onChanged: (num number) {
                 setState(() {
                   _diceCt = number;
