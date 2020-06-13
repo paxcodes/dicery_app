@@ -16,6 +16,11 @@ class DiceryApp extends StatelessWidget {
     return MaterialApp(
         title: 'Dicery',
         theme: ThemeData(
+          textTheme: ThemeData.light().textTheme.copyWith(
+                bodyText1: TextStyle(
+                  fontSize: 18,
+                ),
+              ),
           backgroundColor: Color(0xffedf2f4),
           primaryColor: Color(0xFF2b2d42),
           accentColor: Color(0xFFD90429),

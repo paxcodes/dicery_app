@@ -20,6 +20,8 @@ class _DiceFormState extends State<DiceForm> {
 
   @override
   Widget build(BuildContext context) {
+    final ThemeData themeData = Theme.of(context);
+
     return Column(
       children: <Widget>[
         Row(
@@ -32,6 +34,11 @@ class _DiceFormState extends State<DiceForm> {
               initialValue: _diceCt,
               minValue: widget.minDice,
               maxValue: widget.maxDice,
+              itemStyle: themeData.textTheme.bodyText1,
+              selectedStyle: themeData.textTheme.headline5.copyWith(
+                color: themeData.accentColor,
+                fontWeight: FontWeight.bold,
+              ),
               onChanged: (num number) {
                 setState(() {
                   _diceCt = number;

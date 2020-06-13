@@ -17,6 +17,8 @@ class NumberPicker extends StatelessWidget {
   final ScrollController intScrollController;
   final Function onChanged;
   final int integerItemCount;
+  final TextStyle itemStyle;
+  final TextStyle selectedStyle;
 
   NumberPicker({
     @required int initialValue,
@@ -25,6 +27,8 @@ class NumberPicker extends StatelessWidget {
     @required this.onChanged,
     this.itemExtent = kDefaultItemExtent,
     this.step = 1,
+    this.itemStyle,
+    this.selectedStyle,
   })  : selectedIntValue = initialValue,
         intScrollController = ScrollController(
           initialScrollOffset: (initialValue - minValue) ~/ step * itemExtent,
@@ -68,9 +72,11 @@ class NumberPicker extends StatelessWidget {
                 final int value = index;
 
                 final ThemeData themeData = Theme.of(context);
-                TextStyle defaultStyle = themeData.textTheme.bodyText1;
-                TextStyle selectedStyle = themeData.textTheme.headline5
-                    .copyWith(color: themeData.accentColor);
+                TextStyle defaultStyle =
+                    this.itemStyle ?? themeData.textTheme.bodyText1;
+                TextStyle selectedStyle = this.selectedStyle ??
+                    themeData.textTheme.headline5
+                        .copyWith(color: themeData.accentColor);
                 final TextStyle itemStyle =
                     value == selectedIntValue ? selectedStyle : defaultStyle;
 
