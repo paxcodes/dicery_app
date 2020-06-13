@@ -37,13 +37,14 @@ class _DiceFormState extends State<DiceForm> {
               initialValue: _diceCt,
               minValue: widget.minDice,
               maxValue: widget.maxDice,
-              listViewHeight: 60,
+              listViewHeight: 54,
               itemStyle: themeData.textTheme.bodyText1,
               selectedStyle: themeData.textTheme.headline5.copyWith(
                 color: themeData.accentColor,
                 fontWeight: FontWeight.bold,
               ),
               decoration: BoxDecoration(
+                color: Color(0xFFFAFAFA),
                 border: Border.symmetric(
                   vertical: BorderSide(
                     color: themeData.primaryColor,
