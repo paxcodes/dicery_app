@@ -21,11 +21,9 @@ class DiceRollHistory extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: ListView.builder(
-        itemCount: _rolls.length,
-        itemBuilder: (context, index) => RollEntryListItem(_rolls[index]),
-      ),
+    return ListView.builder(
+      itemCount: _rolls.length,
+      itemBuilder: (context, index) => RollEntryListItem(_rolls[index]),
     );
   }
 }
