@@ -66,14 +66,14 @@ class _DiceFormState extends State<DiceForm> {
           label: "Roll Dice",
           iconData: Icons.refresh,
           onPressed: () {
-            rollDice(_diceCt);
+            _rollDice(_diceCt);
           },
         ),
       ],
     );
   }
 
-  void rollDice(int diceCt) {
+  void _rollDice(int diceCt) {
     List<int> diceRolls = [
       for (int i = 1; i <= diceCt; i++) Random().nextInt(6) + 1
     ];
