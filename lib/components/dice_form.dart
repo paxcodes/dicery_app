@@ -60,6 +60,7 @@ class _DiceFormState extends State<DiceForm> {
             ),
           ],
         ),
+        SizedBox(height: 20),
         DiceryIconButton.primary(
           label: "Roll Dice",
           iconData: Icons.refresh,
