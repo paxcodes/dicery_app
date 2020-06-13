@@ -30,6 +30,9 @@ class _DiceFormState extends State<DiceForm> {
               "# of Dice",
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
+            SizedBox(
+              width: 20,
+            ),
             NumberPicker(
               initialValue: _diceCt,
               minValue: widget.minDice,
