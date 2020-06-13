@@ -4,6 +4,7 @@ import 'package:dicery/models/roll_entry.dart';
 import 'package:flutter/cupertino.dart';
 
 class RollData extends ChangeNotifier {
+  List<int> _lastRoll;
   List<RollEntry> _rollEntries = [
     RollEntry(
         player: "Dakota",
@@ -19,6 +20,12 @@ class RollData extends ChangeNotifier {
         date: DateTime(2020, 1, 2, 6, 33)),
     RollEntry(player: "Dakota", rolls: [6], date: DateTime(2020, 1, 2, 6, 35)),
   ];
+
+  List<int> get lastRoll => _lastRoll;
+  set lastRoll(roll) {
+    _lastRoll = roll;
+    notifyListeners();
+  }
 
   UnmodifiableListView<RollEntry> get rollEntries =>
       UnmodifiableListView(_rollEntries);
