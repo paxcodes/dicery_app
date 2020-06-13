@@ -33,7 +33,6 @@ class _DiceFormState extends State<DiceForm> {
               minValue: widget.minDice,
               maxValue: widget.maxDice,
               onChanged: (num number) {
-                print(number);
                 setState(() {
                   _diceCt = number;
                 });

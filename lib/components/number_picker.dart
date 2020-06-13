@@ -35,8 +35,6 @@ class NumberPicker extends StatelessWidget {
   bool _onScrollNotification(ScrollNotification notification) {
     int intValueInTheMiddle =
         (notification.metrics.pixels / itemExtent).round() + 1;
-    print(
-        "(notification.metrics.pixels / itemExtent).round() $intValueInTheMiddle");
     if (intValueInTheMiddle != selectedIntValue) {
       onChanged(intValueInTheMiddle);
     }
