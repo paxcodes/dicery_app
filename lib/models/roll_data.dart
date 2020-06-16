@@ -5,7 +5,7 @@ import 'package:flutter/cupertino.dart';
 
 class RollData extends ChangeNotifier {
   List<int> _lastRoll;
-  List<RollEntry> _rollEntries = [
+  final List<RollEntry> _rollEntries = [
     RollEntry(
         player: "Dakota",
         rolls: [1, 2, 3, 4, 14],
