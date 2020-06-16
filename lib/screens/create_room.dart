@@ -1,6 +1,6 @@
 import 'package:dicery/components/buttons/base_button.dart';
 import 'package:flutter/material.dart';
-import 'package:dicery/styles.dart' as Styles;
+import 'package:dicery/styles.dart' as styles;
 
 class CreateRoomScreen extends StatelessWidget {
   @override
@@ -21,7 +21,7 @@ class CreateRoomScreen extends StatelessWidget {
               style: TextStyle(
                 color: Colors.black,
               ),
-              decoration: Styles.TextField.copyWith(hintText: 'Your Name'),
+              decoration: styles.TextField.copyWith(hintText: 'Your Name'),
             ),
             SizedBox(height: 20),
             DiceryIconButton.primary(
