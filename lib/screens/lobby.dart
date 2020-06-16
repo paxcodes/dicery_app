@@ -9,7 +9,7 @@ class LobbyScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Map<String, bool> args = ModalRoute.of(context).settings.arguments;
-    final bool isOwnedByUser = args['isOwnedByUser'];
+    final isOwnedByUser = args['isOwnedByUser'];
 
     return Material(
       child: Padding(
