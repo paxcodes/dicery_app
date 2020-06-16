@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 class PlayerColourizer {
-  static Map<String, Color> _players = {};
-  static List<Color> _availableColors = [
+  static final Map<String, Color> _players = {};
+  static final List<Color> _availableColors = [
     Color(0xFF2b2d42),
     Color(0xFF51547B),
     Colors.blueGrey.shade700,
@@ -18,7 +18,7 @@ class PlayerColourizer {
   }
 
   static Color _getAvailableColor() {
-    int colorIndex = _players.length % _availableColors.length;
+    final colorIndex = _players.length % _availableColors.length;
     return _availableColors[colorIndex];
   }
 }

@@ -19,7 +19,7 @@ class RollEntryListItem extends StatelessWidget {
         ),
       ),
       title: Text(
-        rollEntry.rolls.join(" "),
+        rollEntry.rolls.join(' '),
         style: TextStyle(
           wordSpacing: 15,
           fontFamily: 'RobotoMono',
