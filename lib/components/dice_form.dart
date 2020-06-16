@@ -1,6 +1,8 @@
 import 'package:dicery/components/buttons/base_button.dart';
 import 'package:dicery/components/number_picker.dart';
+import 'package:dicery/models/roll_data.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'dart:math';
 
 class DiceForm extends StatefulWidget {
@@ -66,17 +68,18 @@ class _DiceFormState extends State<DiceForm> {
           label: "Roll Dice",
           iconData: Icons.refresh,
           onPressed: () {
-            rollDice(_diceCt);
+            List<int> diceResults = _rollDice(_diceCt);
+            context.read<RollData>().lastRoll = diceResults;
           },
         ),
       ],
     );
   }
 
-  void rollDice(int diceCt) {
-    List<int> diceRolls = [
+  List<int> _rollDice(int diceCt) {
+    List<int> diceResults = [
       for (int i = 1; i <= diceCt; i++) Random().nextInt(6) + 1
     ];
-    print(diceRolls);
+    return diceResults;
   }
 }
