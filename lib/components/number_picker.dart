@@ -40,7 +40,7 @@ class NumberPicker extends StatelessWidget {
         integerItemCount = (maxValue - minValue) ~/ step + 1;
 
   bool _onScrollNotification(ScrollNotification notification) {
-    int intValueInTheMiddle =
+    final intValueInTheMiddle =
         (notification.metrics.pixels / itemExtent).round() + 1;
     if (intValueInTheMiddle != selectedIntValue) {
       onChanged(intValueInTheMiddle);
@@ -52,8 +52,9 @@ class NumberPicker extends StatelessWidget {
   Widget build(BuildContext context) {
     // We need to pad the list so we can "select" the first
     // and last item.
-    int theExtraItemsOnTheBeginningAndEnding = 2;
-    int listItemCount = integerItemCount + theExtraItemsOnTheBeginningAndEnding;
+    final theExtraItemsOnTheBeginningAndEnding = 2;
+    final listItemCount =
+        integerItemCount + theExtraItemsOnTheBeginningAndEnding;
 
     return NotificationListener<ScrollNotification>(
       onNotification: _onScrollNotification,
@@ -73,15 +74,15 @@ class NumberPicker extends StatelessWidget {
               itemBuilder: (context, index) {
                 // todo different from numberpicker. numberpicker has
                 // to consider `step`
-                final int value = index;
+                final value = index;
 
-                final ThemeData themeData = Theme.of(context);
-                TextStyle defaultStyle =
+                final themeData = Theme.of(context);
+                final defaultStyle =
                     this.itemStyle ?? themeData.textTheme.bodyText1;
-                TextStyle selectedStyle = this.selectedStyle ??
+                final selectedStyle = this.selectedStyle ??
                     themeData.textTheme.headline5
                         .copyWith(color: themeData.accentColor);
-                final TextStyle itemStyle =
+                final itemStyle =
                     value == selectedIntValue ? selectedStyle : defaultStyle;
 
                 final edgeItems = index == 0 || index == listItemCount - 1;

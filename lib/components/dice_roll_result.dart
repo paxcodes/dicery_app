@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 class DiceRollResult extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final List<int> diceRolls = context.watch<RollData>().lastRoll;
+    final diceRolls = context.watch<RollData>().lastRoll;
     final themeData = Theme.of(context);
 
     return Padding(

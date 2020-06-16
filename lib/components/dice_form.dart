@@ -22,7 +22,7 @@ class _DiceFormState extends State<DiceForm> {
 
   @override
   Widget build(BuildContext context) {
-    final ThemeData themeData = Theme.of(context);
+    final themeData = Theme.of(context);
 
     return Column(
       children: <Widget>[
@@ -68,7 +68,7 @@ class _DiceFormState extends State<DiceForm> {
           label: "Roll Dice",
           iconData: Icons.refresh,
           onPressed: () {
-            List<int> diceResults = _rollDice(_diceCt);
+            final diceResults = _rollDice(_diceCt);
             context.read<RollData>().lastRoll = diceResults;
           },
         ),
@@ -77,7 +77,7 @@ class _DiceFormState extends State<DiceForm> {
   }
 
   List<int> _rollDice(int diceCt) {
-    List<int> diceResults = [
+    final diceResults = [
       for (int i = 1; i <= diceCt; i++) Random().nextInt(6) + 1
     ];
     return diceResults;

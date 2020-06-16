@@ -18,7 +18,7 @@ class PlayerColourizer {
   }
 
   static Color _getAvailableColor() {
-    int colorIndex = _players.length % _availableColors.length;
+    final colorIndex = _players.length % _availableColors.length;
     return _availableColors[colorIndex];
   }
 }
