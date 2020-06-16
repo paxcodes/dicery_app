@@ -10,7 +10,7 @@ class HomeScreen extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           DiceryIconButton.primary(
-            label: "Create a Room",
+            label: 'Create a Room',
             iconData: Icons.group_add,
             onPressed: () {
               Navigator.pushNamed(context, '/room/create');
@@ -22,7 +22,7 @@ class HomeScreen extends StatelessWidget {
               Navigator.pushNamed(context, '/room/join');
             },
             iconData: Icons.group,
-            label: "Join a Room",
+            label: 'Join a Room',
           ),
         ],
       ),

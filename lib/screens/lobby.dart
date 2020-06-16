@@ -17,14 +17,14 @@ class LobbyScreen extends StatelessWidget {
         child: SafeArea(
           child: Column(
             children: [
-              Text("Room F4K3R",
+              Text('Room F4K3R',
                   style: Theme.of(context).textTheme.headline1.copyWith(
                         fontSize: 50,
                         fontFamily: 'RobotoMono',
                         fontWeight: FontWeight.bold,
                       )),
               Text(
-                "by Sean Williams",
+                'by Sean Williams',
                 style: Theme.of(context).textTheme.subtitle1,
               ),
               SizedBox(height: 50),
@@ -33,7 +33,7 @@ class LobbyScreen extends StatelessWidget {
                 child: TypewriterAnimatedTextKit(
                   text: ['waiting for other players'],
                   textStyle: Theme.of(context).textTheme.headline6.copyWith(
-                        fontFamily: "RobotoMono",
+                        fontFamily: 'RobotoMono',
                         fontSize: 20,
                         fontWeight: FontWeight.w300,
                       ),
@@ -45,8 +45,8 @@ class LobbyScreen extends StatelessWidget {
               Expanded(
                 child: ListView(
                   children: <Widget>[
-                    PlayerCard(emoji: "💯", name: "Dakota"),
-                    PlayerCard(emoji: "🎉", name: "Jordan"),
+                    PlayerCard(emoji: '💯', name: 'Dakota'),
+                    PlayerCard(emoji: '🎉', name: 'Jordan'),
                   ],
                 ),
               ),

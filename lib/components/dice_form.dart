@@ -29,7 +29,7 @@ class _DiceFormState extends State<DiceForm> {
         Row(
           children: <Widget>[
             Text(
-              "# of Dice",
+              '# of Dice',
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
             SizedBox(
@@ -65,7 +65,7 @@ class _DiceFormState extends State<DiceForm> {
         ),
         SizedBox(height: 20),
         DiceryIconButton.primary(
-          label: "Roll Dice",
+          label: 'Roll Dice',
           iconData: Icons.refresh,
           onPressed: () {
             final diceResults = _rollDice(_diceCt);

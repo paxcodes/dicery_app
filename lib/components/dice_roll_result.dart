@@ -13,7 +13,7 @@ class DiceRollResult extends StatelessWidget {
       child: diceRolls == null
           ? Center(
               child: Text(
-              "You have not rolled yet.",
+              'You have not rolled yet.',
               style: themeData.textTheme.bodyText1,
             ))
           : Wrap(
@@ -23,7 +23,7 @@ class DiceRollResult extends StatelessWidget {
                       child: Text(
                         num.toString(),
                         style: TextStyle(
-                          fontFamily: "RobotoMono",
+                          fontFamily: 'RobotoMono',
                           fontSize: 30,
                           fontWeight: FontWeight.bold,
                           color: num == 1
