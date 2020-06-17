@@ -14,12 +14,15 @@ class CreateRoomForm extends StatefulWidget {
 }
 
 class _CreateRoomFormState extends State<CreateRoomForm> {
+  final _nameFieldController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         TextField(
+          controller: _nameFieldController,
           style: TextStyle(
             color: Colors.black,
           ),
@@ -30,7 +33,8 @@ class _CreateRoomFormState extends State<CreateRoomForm> {
           label: 'Create Room',
           iconData: Icons.group_add,
           onPressed: () async {
-            final roomOwner = 'Hunka Wonka';
+            final roomOwner = _nameFieldController.text;
+            // TODO roomOwner must be alphabetical and must not be empty
             final String roomCode = await DiceryApi.createRoom(roomOwner);
             await Navigator.pushNamedAndRemoveUntil(
               context,
@@ -47,5 +51,11 @@ class _CreateRoomFormState extends State<CreateRoomForm> {
         )
       ],
     );
+  }
+
+  @override
+  void dispose() {
+    _nameFieldController.dispose();
+    super.dispose();
   }
 }
