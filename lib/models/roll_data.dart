@@ -25,6 +25,11 @@ class RollData extends ChangeNotifier {
     notifyListeners();
   }
 
+  void addRollEntry(RollEntry newRollEntry) {
+    _rollEntries.insert(0, newRollEntry);
+    notifyListeners();
+  }
+
   UnmodifiableListView<RollEntry> get rollEntries =>
       UnmodifiableListView(_rollEntries);
 }
