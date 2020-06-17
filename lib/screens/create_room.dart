@@ -1,4 +1,5 @@
 import 'package:dicery/components/buttons/base_button.dart';
+import 'package:dicery/utilities/api.dart';
 import 'package:flutter/material.dart';
 import 'package:dicery/styles.dart' as styles;
 
@@ -27,14 +28,18 @@ class CreateRoomScreen extends StatelessWidget {
             DiceryIconButton.primary(
               label: 'Create Room',
               iconData: Icons.group_add,
-              onPressed: () {
-                Navigator.pushNamedAndRemoveUntil(
+              onPressed: () async {
+                final roomOwner = 'Hunka Wonka';
+                final String roomCode = await DiceryApi.createRoom(roomOwner);
+                await Navigator.pushNamedAndRemoveUntil(
                   context,
                   '/lobby',
                   // Clear navigation history
                   (_) => false,
-                  arguments: <String, bool>{
+                  arguments: <String, dynamic>{
                     'isOwnedByUser': true,
+                    'roomOwner': roomOwner,
+                    'roomCode': roomCode
                   },
                 );
               },
