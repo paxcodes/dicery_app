@@ -10,12 +10,18 @@ class RollEntryListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      leading: Text(
-        rollEntry.player,
-        style: TextStyle(
-          fontSize: 20,
-          fontWeight: FontWeight.bold,
-          color: PlayerColourizer.getTextColor(rollEntry.player),
+      leading: SizedBox(
+        // TODO set size dynamically. Otherwise, long player names
+        // will be wrapped. OR we can set a character limit to
+        // player names.
+        width: 80,
+        child: Text(
+          rollEntry.player,
+          style: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+            color: PlayerColourizer.getTextColor(rollEntry.player),
+          ),
         ),
       ),
       title: Text(
