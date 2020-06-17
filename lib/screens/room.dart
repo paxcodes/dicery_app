@@ -1,7 +1,7 @@
 import 'package:dicery/models/roll_data.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:dicery/components/dice_form.dart';
+import 'package:dicery/components/forms/dice_count.dart';
 import 'package:dicery/components/dice_roll_result.dart';
 import 'package:dicery/components/dice_roll_history.dart';
 
@@ -26,7 +26,7 @@ class RoomScreen extends StatelessWidget {
                   style: Theme.of(context).textTheme.subtitle1,
                 ),
                 SizedBox(height: 50),
-                DiceForm(),
+                DiceCountForm(),
                 Expanded(flex: 1, child: DiceRollResult()),
                 Expanded(flex: 2, child: DiceRollHistory()),
               ],

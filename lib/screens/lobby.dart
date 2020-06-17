@@ -8,8 +8,10 @@ import 'package:dicery/components/player_card.dart';
 class LobbyScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    Map<String, bool> args = ModalRoute.of(context).settings.arguments;
-    final isOwnedByUser = args['isOwnedByUser'];
+    Map<String, dynamic> args = ModalRoute.of(context).settings.arguments;
+    final bool isOwnedByUser = args['isOwnedByUser'];
+    final String roomOwner = args['roomOwner'];
+    final String roomCode = args['roomCode'];
 
     return Material(
       child: Padding(
@@ -17,14 +19,14 @@ class LobbyScreen extends StatelessWidget {
         child: SafeArea(
           child: Column(
             children: [
-              Text('Room F4K3R',
+              Text('Room $roomCode',
                   style: Theme.of(context).textTheme.headline1.copyWith(
                         fontSize: 50,
                         fontFamily: 'RobotoMono',
                         fontWeight: FontWeight.bold,
                       )),
               Text(
-                'by Sean Williams',
+                'by $roomOwner',
                 style: Theme.of(context).textTheme.subtitle1,
               ),
               SizedBox(height: 50),
