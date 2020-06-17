@@ -56,7 +56,10 @@ class LobbyScreen extends StatelessWidget {
                 DiceryIconButton.primary(
                   label: "Everyone's in",
                   onPressed: () {
-                    Navigator.pushNamed(context, '/room');
+                    Navigator.pushNamed(context, '/room', arguments: {
+                      'roomOwner': roomOwner,
+                      'roomCode': roomCode,
+                    });
                   },
                   iconData: Icons.forward,
                 ),
