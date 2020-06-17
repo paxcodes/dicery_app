@@ -5,19 +5,19 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'dart:math';
 
-class DiceForm extends StatefulWidget {
+class DiceCountForm extends StatefulWidget {
   final int maxDice = 6;
   final int minDice = 1;
 
-  const DiceForm({
+  const DiceCountForm({
     Key key,
   }) : super(key: key);
 
   @override
-  _DiceFormState createState() => _DiceFormState();
+  _DiceCountFormState createState() => _DiceCountFormState();
 }
 
-class _DiceFormState extends State<DiceForm> {
+class _DiceCountFormState extends State<DiceCountForm> {
   int _diceCt = 6;
 
   @override
