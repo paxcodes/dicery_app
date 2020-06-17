@@ -1,6 +1,7 @@
 import 'package:dicery/components/buttons/base_button.dart';
 import 'package:dicery/components/number_picker.dart';
 import 'package:dicery/models/roll_data.dart';
+import 'package:dicery/models/roll_entry.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'dart:math';
@@ -70,6 +71,11 @@ class _DiceCountFormState extends State<DiceCountForm> {
           onPressed: () {
             final diceResults = _rollDice(_diceCt);
             context.read<RollData>().lastRoll = diceResults;
+            context.read<RollData>().addRollEntry(RollEntry(
+                  player: 'Pax',
+                  rolls: diceResults,
+                  date: DateTime.now(),
+                ));
           },
         ),
       ],
