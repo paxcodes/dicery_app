@@ -19,7 +19,7 @@ class DiceCountForm extends StatefulWidget {
 }
 
 class _DiceCountFormState extends State<DiceCountForm> {
-  int _diceCt = 6;
+  int _diceCt = 1;
 
   @override
   Widget build(BuildContext context) {
