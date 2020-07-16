@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:dicery/components/buttons/base_button.dart';
 import 'package:dicery/utilities/api.dart';
 import 'package:dicery/styles.dart' as styles;
+import 'package:flutter/services.dart';
 
 class CreateRoomForm extends StatefulWidget {
   const CreateRoomForm({
@@ -22,6 +23,11 @@ class _CreateRoomFormState extends State<CreateRoomForm> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         TextField(
+          maxLength: 32,
+          maxLengthEnforced: true,
+          inputFormatters: <TextInputFormatter>[
+            WhitelistingTextInputFormatter(RegExp(r'[a-zA-Z0-9]'))
+          ],
           controller: _nameFieldController,
           style: TextStyle(
             color: Colors.black,
