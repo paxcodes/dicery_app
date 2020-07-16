@@ -34,8 +34,8 @@ class _CreateRoomFormState extends State<CreateRoomForm> {
           iconData: Icons.group_add,
           onPressed: () async {
             final roomOwner = _nameFieldController.text;
-            // TODO roomOwner must be alphabetical and must not be empty
-            final String roomCode = await DiceryApi.createRoom(roomOwner);
+            // TODO Validate roomOwner must be alphabetical and must not be empty
+            final room = await DiceryApi.createRoom(roomOwner);
             await Navigator.pushNamedAndRemoveUntil(
               context,
               '/lobby',
@@ -43,8 +43,8 @@ class _CreateRoomFormState extends State<CreateRoomForm> {
               (_) => false,
               arguments: <String, dynamic>{
                 'isOwnedByUser': true,
-                'roomOwner': roomOwner,
-                'roomCode': roomCode
+                'roomOwner': room.owner,
+                'roomCode': room.code
               },
             );
           },
