@@ -23,7 +23,7 @@ class _CreateRoomFormState extends State<CreateRoomForm> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         TextField(
-          maxLength: 32,
+          maxLength: 16,
           maxLengthEnforced: true,
           inputFormatters: <TextInputFormatter>[
             WhitelistingTextInputFormatter(RegExp(r'[a-zA-Z0-9]'))
