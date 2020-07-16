@@ -1,9 +1,8 @@
+import 'package:dicery/components/forms/name_field.dart';
 import 'package:flutter/material.dart';
 
 import 'package:dicery/components/buttons/base_button.dart';
 import 'package:dicery/utilities/api.dart';
-import 'package:dicery/styles.dart' as styles;
-import 'package:flutter/services.dart';
 
 class CreateRoomForm extends StatefulWidget {
   const CreateRoomForm({
@@ -22,18 +21,7 @@ class _CreateRoomFormState extends State<CreateRoomForm> {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        TextField(
-          maxLength: 16,
-          maxLengthEnforced: true,
-          inputFormatters: <TextInputFormatter>[
-            WhitelistingTextInputFormatter(RegExp(r'[a-zA-Z0-9]'))
-          ],
-          controller: _nameFieldController,
-          style: TextStyle(
-            color: Colors.black,
-          ),
-          decoration: styles.TextField.copyWith(hintText: 'Your Name'),
-        ),
+        NameField(controller: _nameFieldController),
         SizedBox(height: 20),
         DiceryIconButton.primary(
           label: 'Create Room',
@@ -43,7 +31,7 @@ class _CreateRoomFormState extends State<CreateRoomForm> {
             if (roomOwner.isEmpty) {
               Scaffold.of(context).showSnackBar(
                 SnackBar(
-                  content: Text("Please enter a name that you'd like "
+                  content: Text("🙅🏻‍♀️ Please enter a name that you'd like "
                       'to be identified with.'),
                 ),
               );
