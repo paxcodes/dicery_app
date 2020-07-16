@@ -1,9 +1,10 @@
 import 'dart:convert';
 
+import 'package:flutter_config/flutter_config.dart';
 import 'package:http/http.dart' as http;
 
 class DiceryApi {
-  static const String baseUrl = 'http://localhost:8000';
+  static final String baseUrl = FlutterConfig.get('API_URL');
 
   /// Creates a room.
   ///
