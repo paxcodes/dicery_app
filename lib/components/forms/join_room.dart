@@ -12,38 +12,51 @@ class JoinRoomForm extends StatefulWidget {
 }
 
 class _JoinRoomFormState extends State<JoinRoomForm> {
+  final _formKey = GlobalKey<FormState>();
   final _nameFieldController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        TextField(
-          style: TextStyle(
-            color: Colors.black,
+    return Form(
+      key: _formKey,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          TextFormField(
+            style: TextStyle(
+              color: Colors.black,
+            ),
+            decoration: styles.TextField.copyWith(hintText: 'Room ID'),
+            validator: (value) =>
+                value.isEmpty ? 'Please enter the room ID.' : null,
           ),
-          decoration: styles.TextField.copyWith(hintText: 'Room ID'),
-        ),
-        SizedBox(height: 20),
-        NameField(controller: _nameFieldController),
-        SizedBox(height: 20),
-        DiceryIconButton.primary(
-          label: 'Join Room',
-          iconData: Icons.group,
-          onPressed: () {
-            Navigator.pushNamedAndRemoveUntil(
-              context,
-              '/lobby',
-              // Clear navigation history
-              (_) => false,
-              arguments: <String, bool>{
-                'isOwnedByUser': false,
-              },
-            );
-          },
-        )
-      ],
+          SizedBox(height: 20),
+          NameField(controller: _nameFieldController),
+          SizedBox(height: 20),
+          DiceryIconButton.primary(
+            label: 'Join Room',
+            iconData: Icons.group,
+            onPressed: () {
+              if (_formKey.currentState.validate()) {
+                Scaffold.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text('Joining room ✨'),
+                  ),
+                );
+                Navigator.pushNamedAndRemoveUntil(
+                  context,
+                  '/lobby',
+                  // Clear navigation history
+                  (_) => false,
+                  arguments: <String, bool>{
+                    'isOwnedByUser': false,
+                  },
+                );
+              }
+            },
+          )
+        ],
+      ),
     );
   }
 }
