@@ -26,11 +26,14 @@ class _JoinRoomFormState extends State<JoinRoomForm> {
             style: TextStyle(
               color: Colors.black,
             ),
-            decoration: styles.TextField.copyWith(hintText: 'Room ID'),
+            decoration: styles.TextField.copyWith(
+              hintText: 'Room ID',
+              helperText: ' ',
+            ),
             validator: (value) =>
                 value.isEmpty ? 'Please enter the room ID.' : null,
           ),
-          SizedBox(height: 20),
+          SizedBox(height: 15),
           NameField(controller: _nameFieldController),
           SizedBox(height: 20),
           DiceryIconButton.primary(

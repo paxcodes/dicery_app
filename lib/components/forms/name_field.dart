@@ -11,6 +11,10 @@ class NameField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      decoration: styles.TextField.copyWith(
+        hintText: 'Your Name',
+        helperText: ' ',
+      ),
       validator: (value) => value.isEmpty ? 'Please enter your name.' : null,
       maxLength: 16,
       maxLengthEnforced: true,
@@ -21,7 +25,6 @@ class NameField extends StatelessWidget {
       style: TextStyle(
         color: Colors.black,
       ),
-      decoration: styles.TextField.copyWith(hintText: 'Your Name'),
     );
   }
 }
