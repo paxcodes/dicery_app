@@ -10,7 +10,13 @@ class NameField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
+    return TextFormField(
+      validator: (value) {
+        if (value.isEmpty) {
+          return 'Please enter your name.';
+        }
+        return null;
+      },
       maxLength: 16,
       maxLengthEnforced: true,
       inputFormatters: <TextInputFormatter>[
