@@ -14,6 +14,7 @@ class JoinRoomForm extends StatefulWidget {
 class _JoinRoomFormState extends State<JoinRoomForm> {
   final _formKey = GlobalKey<FormState>();
   final _nameFieldController = TextEditingController();
+  final _roomFieldController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -23,6 +24,7 @@ class _JoinRoomFormState extends State<JoinRoomForm> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           TextFormField(
+            controller: _roomFieldController,
             style: TextStyle(
               color: Colors.black,
             ),
@@ -61,5 +63,12 @@ class _JoinRoomFormState extends State<JoinRoomForm> {
         ],
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _roomFieldController.dispose();
+    _nameFieldController.dispose();
+    super.dispose();
   }
 }
