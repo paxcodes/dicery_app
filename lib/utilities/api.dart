@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:meta/meta.dart';
 import 'package:flutter_config/flutter_config.dart';
 import 'package:http/http.dart' as http;
 
@@ -13,12 +14,14 @@ class DiceryApi {
   /// Returns the room info: code, owner, isAvailable.
   static Future<Room> createRoom(String roomOwner) async {
     final requestBody = {'room_owner': roomOwner};
-    final requestUrl = '$baseUrl/rooms';
+    final endpoint = 'rooms';
+    final requestUrl = '$baseUrl/$endpoint';
     final response = await http.post(requestUrl, body: requestBody);
     if (!HttpHelper.isOk(response)) {
       throw OperationFailedException(
-          'Failed creating room: ${response.statusCode} '
-          '${response.reasonPhrase}');
+        response,
+        plainMsg: '🛑 Something went wrong on our end. Try again later.',
+      );
     }
     return Room.fromJson(jsonDecode(response.body));
   }
@@ -31,7 +34,10 @@ class HttpHelper {
 }
 
 class OperationFailedException implements Exception {
-  final String message;
+  final String geekyMsg;
+  final String plainMsg;
 
-  OperationFailedException(this.message);
+  OperationFailedException(http.Response response, {@required this.plainMsg})
+      : geekyMsg = '${response.request.method} ${response.request.url.path}: '
+            '${response.statusCode} ${response.reasonPhrase}';
 }
