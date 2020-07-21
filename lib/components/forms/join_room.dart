@@ -1,3 +1,4 @@
+import 'package:dicery/utilities/api.dart';
 import 'package:flutter/material.dart';
 import 'package:dicery/components/forms/name_field.dart';
 import 'package:dicery/components/buttons/base_button.dart';
@@ -41,20 +42,40 @@ class _JoinRoomFormState extends State<JoinRoomForm> {
           DiceryIconButton.primary(
             label: 'Join Room',
             iconData: Icons.group,
-            onPressed: () {
-              if (_formKey.currentState.validate()) {
+            onPressed: () async {
+              if (!_formKey.currentState.validate()) {
+                return;
+              }
+
+              Scaffold.of(context).showSnackBar(
+                SnackBar(
+                  content: Text('Joining room ✨'),
+                ),
+              );
+
+              final roomCode = _roomFieldController.text.trim();
+              final player = _nameFieldController.text.trim();
+
+              var room;
+              try {
+                room = await DiceryApi.authenticate(roomCode, player);
+              } on OperationFailedException catch (e) {
                 Scaffold.of(context).showSnackBar(
                   SnackBar(
-                    content: Text('Joining room ✨'),
+                    content: Text(e.plainMsg),
                   ),
                 );
-                Navigator.pushNamedAndRemoveUntil(
+              }
+              if (room != null) {
+                await Navigator.pushNamedAndRemoveUntil(
                   context,
                   '/lobby',
                   // Clear navigation history
                   (_) => false,
-                  arguments: <String, bool>{
+                  arguments: <String, dynamic>{
                     'isOwnedByUser': false,
+                    'roomCode': room.code,
+                    'roomOwner': room.owner
                   },
                 );
               }
