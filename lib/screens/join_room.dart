@@ -1,6 +1,5 @@
-import 'package:dicery/components/buttons/base_button.dart';
 import 'package:flutter/material.dart';
-import 'package:dicery/styles.dart' as styles;
+import 'package:dicery/components/forms/join_room.dart';
 
 class JoinRoomScreen extends StatelessWidget {
   @override
@@ -14,40 +13,7 @@ class JoinRoomScreen extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.all(40.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            TextField(
-              style: TextStyle(
-                color: Colors.black,
-              ),
-              decoration: styles.TextField.copyWith(hintText: 'Room ID'),
-            ),
-            SizedBox(height: 20),
-            TextField(
-              style: TextStyle(
-                color: Colors.black,
-              ),
-              decoration: styles.TextField.copyWith(hintText: 'Name'),
-            ),
-            SizedBox(height: 20),
-            DiceryIconButton.primary(
-              label: 'Join Room',
-              iconData: Icons.group,
-              onPressed: () {
-                Navigator.pushNamedAndRemoveUntil(
-                  context,
-                  '/lobby',
-                  // Clear navigation history
-                  (_) => false,
-                  arguments: <String, bool>{
-                    'isOwnedByUser': false,
-                  },
-                );
-              },
-            )
-          ],
-        ),
+        child: JoinRoomForm(),
       ),
     );
   }
