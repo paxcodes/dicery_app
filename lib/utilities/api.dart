@@ -57,33 +57,15 @@ class DiceryApi {
     return Room.fromJson(jsonDecode(response.body));
   }
 
-  static Future<String> joinLobby(String roomCode) async {
+  static Future<http.StreamedResponse> joinLobby(
+      http.Client client, String roomCode) async {
     final endpoint = 'lobby/$roomCode';
-    final requestUrl = Uri.encodeFull('$baseUrl/$endpoint');
-    final headers = {'cookie': _cookie};
-    final response = await http.get(requestUrl, headers: headers);
-    if (response.statusCode == HttpStatus.notFound) {
-      throw OperationFailedException(
-        response,
-        plainMsg: '⚠️ Room $roomCode is either closed or nonexistent. '
-            'Check your room code.',
-      );
-    }
-
-    if (response.statusCode == HttpStatus.forbidden) {
-      throw OperationFailedException(
-        response,
-        plainMsg: '⚠️ You are unauthorized to join lobby of Room $roomCode.',
-      );
-    }
-
-    if (HttpHelper.isNotOk(response)) {
-      throw OperationFailedException(
-        response,
-        plainMsg: '🛑 Something went wrong on our end. Try again later.',
-      );
-    }
-    return response.body;
+    final request =
+        http.Request('GET', Uri.parse(Uri.encodeFull('$baseUrl/$endpoint')));
+    request.headers['Cache-Control'] = 'no-cache';
+    request.headers['Accept'] = 'text/event-stream';
+    request.headers['Cookie'] = _cookie;
+    return client.send(request);
   }
 }
 

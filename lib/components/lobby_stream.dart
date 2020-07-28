@@ -18,15 +18,22 @@ class LobbyStream extends StatefulWidget {
 class _LobbyStreamState extends State<LobbyStream> {
   final _client = http.Client();
   Future<http.StreamedResponse> streamedResponseFuture;
-  final _playerCards = [
-    PlayerCard(emoji: '💯', name: 'Dakota'),
-    PlayerCard(emoji: '🎉', name: 'Jordan')
-  ];
+  final _playerCards = [];
 
   @override
   void initState() {
     subscribe();
     super.initState();
+  }
+
+  String extractData(String eventData) {
+    eventData = eventData.trim();
+    if (eventData.startsWith('data: ')) {
+      eventData = eventData.replaceFirst('data: ', '');
+    } else {
+      eventData = '';
+    }
+    return eventData;
   }
 
   @override
@@ -42,9 +49,12 @@ class _LobbyStreamState extends State<LobbyStream> {
                 if (snapshot.hasError) {
                   return Text('Error!');
                 } else if (snapshot.hasData) {
-                  _playerCards
-                      .add(PlayerCard(emoji: '💯', name: snapshot.data));
+                  final data = extractData(snapshot.data);
+                  if (data != '') {
+                    _playerCards.add(PlayerCard(emoji: '💯', name: data));
+                  }
                   return ListView.builder(
+                      itemCount: _playerCards.length,
                       itemBuilder: (context, index) => _playerCards[index]);
                 }
                 return Text('');
@@ -55,17 +65,10 @@ class _LobbyStreamState extends State<LobbyStream> {
     );
   }
 
-  void subscribe() async {
+  void subscribe() {
     print('Subscribing...');
     try {
-      var resp = await DiceryApi.joinLobby(widget.roomCode);
-      print('API HAS RESPONDED!!! $resp');
-//      final request = http.Request(
-//          'GET', Uri.parse('http://dicery-staging.margret.pw/lobby/F4K3R00M'));
-//      request.headers['Cache-Control'] = 'no-cache';
-//      request.headers['Accept'] = 'text/event-stream';
-//
-//      streamedResponseFuture = _client.send(request);
+      streamedResponseFuture = DiceryApi.joinLobby(_client, widget.roomCode);
     } catch (e) {
       print('Caught $e');
     }
