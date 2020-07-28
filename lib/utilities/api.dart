@@ -57,10 +57,11 @@ class DiceryApi {
     return Room.fromJson(jsonDecode(response.body));
   }
 
-  static Future<String> joinRoom(String roomCode, String player) async {
+  static Future<String> joinLobby(String roomCode) async {
     final endpoint = 'lobby/$roomCode';
     final requestUrl = Uri.encodeFull('$baseUrl/$endpoint');
-    final response = await http.get(requestUrl);
+    final headers = {'cookie': _cookie};
+    final response = await http.get(requestUrl, headers: headers);
     if (response.statusCode == HttpStatus.notFound) {
       throw OperationFailedException(
         response,

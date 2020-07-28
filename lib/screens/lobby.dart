@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:dicery/components/buttons/base_button.dart';
-import 'package:dicery/components/player_card.dart';
+import 'package:dicery/components/lobby_stream.dart';
 
 class LobbyScreen extends StatelessWidget {
   @override
@@ -45,11 +45,8 @@ class LobbyScreen extends StatelessWidget {
               ),
               SizedBox(height: 20),
               Expanded(
-                child: ListView(
-                  children: <Widget>[
-                    PlayerCard(emoji: '💯', name: 'Dakota'),
-                    PlayerCard(emoji: '🎉', name: 'Jordan'),
-                  ],
+                child: LobbyStream(
+                  roomCode: roomCode,
                 ),
               ),
               if (isOwnedByUser)
