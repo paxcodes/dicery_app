@@ -26,14 +26,17 @@ class _LobbyStreamState extends State<LobbyStream> {
     super.initState();
   }
 
-  String extractData(String eventData) {
+  void addPlayersFromData(String eventData) {
     eventData = eventData.trim();
-    if (eventData.startsWith('data: ')) {
-      eventData = eventData.replaceFirst('data: ', '');
-    } else {
-      eventData = '';
+    if (!eventData.startsWith('data: ')) {
+      return;
     }
-    return eventData;
+
+    eventData = eventData.replaceFirst('data: ', '');
+    final players = eventData.split(',');
+    players.forEach((player) {
+      _playerCards.add(PlayerCard(emoji: '💯', name: player));
+    });
   }
 
   @override
@@ -49,10 +52,7 @@ class _LobbyStreamState extends State<LobbyStream> {
                 if (snapshot.hasError) {
                   return Text('Error!');
                 } else if (snapshot.hasData) {
-                  final data = extractData(snapshot.data);
-                  if (data != '') {
-                    _playerCards.add(PlayerCard(emoji: '💯', name: data));
-                  }
+                  addPlayersFromData(snapshot.data);
                   return ListView.builder(
                       itemCount: _playerCards.length,
                       itemBuilder: (context, index) => _playerCards[index]);
