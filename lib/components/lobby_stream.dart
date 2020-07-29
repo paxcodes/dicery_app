@@ -1,10 +1,12 @@
 import 'dart:async';
-import 'package:dicery/utilities/api.dart';
-
 import 'package:flutter/material.dart';
-import 'package:dicery/components/player_card.dart';
 
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
+
+import 'package:dicery/models/player_data.dart';
+import 'package:dicery/utilities/api.dart';
+import 'package:dicery/components/player_card.dart';
 
 class LobbyStream extends StatefulWidget {
   final String roomCode;
@@ -18,7 +20,6 @@ class LobbyStream extends StatefulWidget {
 class _LobbyStreamState extends State<LobbyStream> {
   final _client = http.Client();
   Future<http.StreamedResponse> streamedResponseFuture;
-  final _playerCards = [];
 
   @override
   void initState() {
@@ -26,7 +27,7 @@ class _LobbyStreamState extends State<LobbyStream> {
     super.initState();
   }
 
-  void addPlayersFromData(String eventData) {
+  void addPlayersFromData(String eventData, BuildContext context) {
     eventData = eventData.trim();
     if (!eventData.startsWith('data: ')) {
       return;
@@ -34,9 +35,7 @@ class _LobbyStreamState extends State<LobbyStream> {
 
     eventData = eventData.replaceFirst('data: ', '');
     final players = eventData.split(',');
-    players.forEach((player) {
-      _playerCards.add(PlayerCard(emoji: '💯', name: player));
-    });
+    context.read<PlayerData>().addPlayers(players);
   }
 
   @override
@@ -52,10 +51,13 @@ class _LobbyStreamState extends State<LobbyStream> {
                 if (snapshot.hasError) {
                   return Text('Error!');
                 } else if (snapshot.hasData) {
-                  addPlayersFromData(snapshot.data);
+                  addPlayersFromData(snapshot.data, context);
+                  final players = context.watch<PlayerData>().players;
                   return ListView.builder(
-                      itemCount: _playerCards.length,
-                      itemBuilder: (context, index) => _playerCards[index]);
+                    itemCount: players.length,
+                    itemBuilder: (context, index) =>
+                        PlayerCard(emoji: '✨', name: players[index]),
+                  );
                 }
                 return Text('');
               });

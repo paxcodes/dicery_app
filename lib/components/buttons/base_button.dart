@@ -20,9 +20,17 @@ class DiceryIconButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var finalIconColor = _iconColor;
+    var finalTextColor = _textColor;
+    if (onPressed == null) {
+      finalIconColor = _iconColor.withOpacity(0.3);
+      finalTextColor = _textColor.withOpacity(0.3);
+    }
+
     return SizedBox(
       width: 275,
       child: RaisedButton.icon(
+        disabledColor: Color(0xFFEFEFEF),
         color: _backgroundColor,
         onPressed: onPressed,
         shape:
@@ -30,7 +38,7 @@ class DiceryIconButton extends StatelessWidget {
         padding: EdgeInsets.symmetric(vertical: 20, horizontal: 40),
         icon: Icon(
           iconData,
-          color: _iconColor,
+          color: finalIconColor,
           size: 35,
         ),
         label: Text(
@@ -38,7 +46,7 @@ class DiceryIconButton extends StatelessWidget {
           style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 20,
-            color: _textColor,
+            color: finalTextColor,
           ),
         ),
       ),
