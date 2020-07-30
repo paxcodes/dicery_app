@@ -1,9 +1,8 @@
-import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'package:dicery/components/buttons/base_button.dart';
-import 'package:dicery/components/player_card.dart';
+import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:dicery/components/lobby_stream.dart';
 
 class LobbyScreen extends StatelessWidget {
   @override
@@ -44,25 +43,10 @@ class LobbyScreen extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 20),
-              Expanded(
-                child: ListView(
-                  children: <Widget>[
-                    PlayerCard(emoji: '💯', name: 'Dakota'),
-                    PlayerCard(emoji: '🎉', name: 'Jordan'),
-                  ],
-                ),
-              ),
-              if (isOwnedByUser)
-                DiceryIconButton.primary(
-                  label: "Everyone's in",
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/room', arguments: {
-                      'roomOwner': roomOwner,
-                      'roomCode': roomCode,
-                    });
-                  },
-                  iconData: Icons.forward,
-                ),
+              LobbyStream(
+                  roomCode: roomCode,
+                  isOwnedByUser: isOwnedByUser,
+                  roomOwner: roomOwner),
             ],
           ),
         ),

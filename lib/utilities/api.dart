@@ -19,12 +19,18 @@ class DiceryApi {
     final endpoint = 'rooms';
     final requestUrl = '$baseUrl/$endpoint';
     final response = await http.post(requestUrl, body: requestBody);
+
     if (!HttpHelper.isOk(response)) {
       throw OperationFailedException(
         response,
         plainMsg: '🛑 Something went wrong on our end. Try again later.',
       );
     }
+
+    // TODO store cookie in secure storage?
+    var rawCookie = response.headers['set-cookie'];
+    var index = rawCookie.indexOf(';');
+    _cookie = (index == -1) ? rawCookie : rawCookie.substring(0, index);
     return Room.fromJson(jsonDecode(response.body));
   }
 
@@ -57,32 +63,15 @@ class DiceryApi {
     return Room.fromJson(jsonDecode(response.body));
   }
 
-  static Future<String> joinRoom(String roomCode, String player) async {
+  static Future<http.StreamedResponse> joinLobby(
+      http.Client client, String roomCode) async {
     final endpoint = 'lobby/$roomCode';
-    final requestUrl = Uri.encodeFull('$baseUrl/$endpoint');
-    final response = await http.get(requestUrl);
-    if (response.statusCode == HttpStatus.notFound) {
-      throw OperationFailedException(
-        response,
-        plainMsg: '⚠️ Room $roomCode is either closed or nonexistent. '
-            'Check your room code.',
-      );
-    }
-
-    if (response.statusCode == HttpStatus.forbidden) {
-      throw OperationFailedException(
-        response,
-        plainMsg: '⚠️ You are unauthorized to join lobby of Room $roomCode.',
-      );
-    }
-
-    if (HttpHelper.isNotOk(response)) {
-      throw OperationFailedException(
-        response,
-        plainMsg: '🛑 Something went wrong on our end. Try again later.',
-      );
-    }
-    return response.body;
+    final request =
+        http.Request('GET', Uri.parse(Uri.encodeFull('$baseUrl/$endpoint')));
+    request.headers['Cache-Control'] = 'no-cache';
+    request.headers['Accept'] = 'text/event-stream';
+    request.headers['Cookie'] = _cookie;
+    return client.send(request);
   }
 }
 
