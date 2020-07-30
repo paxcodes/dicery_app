@@ -19,12 +19,18 @@ class DiceryApi {
     final endpoint = 'rooms';
     final requestUrl = '$baseUrl/$endpoint';
     final response = await http.post(requestUrl, body: requestBody);
+
     if (!HttpHelper.isOk(response)) {
       throw OperationFailedException(
         response,
         plainMsg: '🛑 Something went wrong on our end. Try again later.',
       );
     }
+
+    // TODO store cookie in secure storage?
+    var rawCookie = response.headers['set-cookie'];
+    var index = rawCookie.indexOf(';');
+    _cookie = (index == -1) ? rawCookie : rawCookie.substring(0, index);
     return Room.fromJson(jsonDecode(response.body));
   }
 
