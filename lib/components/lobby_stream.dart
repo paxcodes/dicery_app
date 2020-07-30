@@ -1,17 +1,23 @@
 import 'dart:async';
+import 'package:dicery/utilities/lobby.dart';
 import 'package:flutter/material.dart';
 
 import 'package:http/http.dart' as http;
-import 'package:provider/provider.dart';
 
-import 'package:dicery/models/player_data.dart';
-import 'package:dicery/utilities/api.dart';
+import 'package:dicery/components/buttons/everyoneisin_button.dart';
 import 'package:dicery/components/player_card.dart';
 
 class LobbyStream extends StatefulWidget {
-  final String roomCode;
+  const LobbyStream({
+    Key key,
+    @required this.roomCode,
+    @required this.isOwnedByUser,
+    @required this.roomOwner,
+  }) : super(key: key);
 
-  const LobbyStream({Key key, this.roomCode}) : super(key: key);
+  final String roomCode;
+  final bool isOwnedByUser;
+  final String roomOwner;
 
   @override
   _LobbyStreamState createState() => _LobbyStreamState();
@@ -20,22 +26,12 @@ class LobbyStream extends StatefulWidget {
 class _LobbyStreamState extends State<LobbyStream> {
   final _client = http.Client();
   Future<http.StreamedResponse> streamedResponseFuture;
+  final players = <String>[];
 
   @override
   void initState() {
-    subscribe();
+    streamedResponseFuture = Lobby.Subscribe(_client, widget.roomCode);
     super.initState();
-  }
-
-  void addPlayersFromData(String eventData, BuildContext context) {
-    eventData = eventData.trim();
-    if (!eventData.startsWith('data: ')) {
-      return;
-    }
-
-    eventData = eventData.replaceFirst('data: ', '');
-    final players = eventData.split(',');
-    context.read<PlayerData>().addPlayers(players);
   }
 
   @override
@@ -46,44 +42,43 @@ class _LobbyStreamState extends State<LobbyStream> {
         if (snapshot.hasData) {
           final streamedResponse = snapshot.data;
           return StreamBuilder<String>(
-              stream: streamedResponse.stream.toStringStream(),
-              builder: (context, snapshot) {
-                if (snapshot.hasError) {
-                  return Text('Error!');
-                } else if (snapshot.hasData) {
-                  addPlayersFromData(snapshot.data, context);
-                  final players = context.watch<PlayerData>().players;
-                  return ListView.builder(
-                    itemCount: players.length,
-                    itemBuilder: (context, index) =>
-                        PlayerCard(emoji: '✨', name: players[index]),
-                  );
-                }
-                return Text('');
-              });
+            stream: streamedResponse.stream.toStringStream(),
+            builder: (context, snapshot) {
+              if (snapshot.hasError) {
+                return Text('Error!');
+              } else if (snapshot.hasData) {
+                final newPlayers = Lobby.GetPlayersFromData(snapshot.data);
+                players.addAll(newPlayers);
+              }
+              return Expanded(
+                child: Column(
+                  children: <Widget>[
+                    Expanded(
+                      child: ListView.builder(
+                        itemCount: players.length,
+                        itemBuilder: (context, index) =>
+                            PlayerCard(emoji: '✨', name: players[index]),
+                      ),
+                    ),
+                    if (widget.isOwnedByUser)
+                      EveryonesInButton(
+                          playerCount: players.length,
+                          roomOwner: widget.roomOwner,
+                          roomCode: widget.roomCode),
+                  ],
+                ),
+              );
+            },
+          );
         }
         return Text('');
       },
     );
   }
 
-  void subscribe() {
-    print('Subscribing...');
-    try {
-      streamedResponseFuture = DiceryApi.joinLobby(_client, widget.roomCode);
-    } catch (e) {
-      print('Caught $e');
-    }
-  }
-
-  void closeClient() {
-    _client.close();
-    print('Closed the client!');
-  }
-
   @override
   void dispose() {
-    closeClient();
+    _client.close();
     super.dispose();
   }
 }
