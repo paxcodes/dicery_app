@@ -73,6 +73,26 @@ class DiceryApi {
     request.headers['Cookie'] = _cookie;
     return client.send(request);
   }
+
+  static Future<void> closeRoom(String roomCode) async {
+    final endpoint = 'rooms/$roomCode/status/0';
+    final requestUrl = '$baseUrl/$endpoint';
+    final headers = {'cookie': _cookie};
+    final response = await http.put(requestUrl, headers: headers);
+    if (response.statusCode == HttpStatus.forbidden) {
+      throw OperationFailedException(
+        response,
+        plainMsg: '🛑 You are not authorized to close the room.',
+      );
+    }
+
+    if (response.statusCode == HttpStatus.notFound) {
+      throw OperationFailedException(
+        response,
+        plainMsg: '🛑 Room does not exist or already closed.',
+      );
+    }
+  }
 }
 
 class HttpHelper {

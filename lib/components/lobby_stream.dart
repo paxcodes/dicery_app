@@ -6,6 +6,7 @@ import 'package:http/http.dart' as http;
 
 import 'package:dicery/components/buttons/everyoneisin_button.dart';
 import 'package:dicery/components/player_card.dart';
+import 'package:dicery/components/stream_listenable_builder.dart';
 
 class LobbyStream extends StatefulWidget {
   const LobbyStream({
@@ -41,14 +42,25 @@ class _LobbyStreamState extends State<LobbyStream> {
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           final streamedResponse = snapshot.data;
-          return StreamBuilder<String>(
+          return StreamListenableBuilder<String>(
             stream: streamedResponse.stream.toStringStream(),
+            listener: (value) {
+              final data = Lobby.InterpretData(value);
+              if (data == Lobby.CLOSE_ROOM_COMMAND) {
+                Navigator.pushNamed(context, '/room', arguments: {
+                  'roomOwner': widget.roomOwner,
+                  'roomCode': widget.roomCode,
+                });
+              }
+            },
             builder: (context, snapshot) {
               if (snapshot.hasError) {
                 return Text('Error!');
               } else if (snapshot.hasData) {
-                final newPlayers = Lobby.GetPlayersFromData(snapshot.data);
-                players.addAll(newPlayers);
+                final data = Lobby.InterpretData(snapshot.data);
+                if (data is List<String>) {
+                  players.addAll(data);
+                }
               }
               return Expanded(
                 child: Column(
