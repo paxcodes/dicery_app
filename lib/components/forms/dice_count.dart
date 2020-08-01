@@ -4,14 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:dicery/components/buttons/base_button.dart';
 import 'package:dicery/components/number_picker.dart';
 import 'package:dicery/components/dice_roll_result.dart';
+import 'package:dicery/utilities/api.dart';
 
 class DiceCountForm extends StatefulWidget {
+  final String roomCode;
   final int maxDice = 6;
   final int minDice = 1;
 
-  const DiceCountForm({
-    Key key,
-  }) : super(key: key);
+  const DiceCountForm({Key key, @required this.roomCode}) : super(key: key);
 
   @override
   _DiceCountFormState createState() => _DiceCountFormState();
@@ -72,7 +72,7 @@ class _DiceCountFormState extends State<DiceCountForm> {
             setState(() {
               _diceResults = _rollDice(_diceCt);
             });
-            // TODO DiceryApi.sendDiceResults(diceResults);
+            DiceryApi.sendDiceResults(_diceResults, widget.roomCode);
           },
         ),
         DiceRollResult(_diceResults),
