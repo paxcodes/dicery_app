@@ -74,6 +74,17 @@ class DiceryApi {
     return client.send(request);
   }
 
+  static Future<http.StreamedResponse> subscribeToRoom(
+      http.Client client, String roomCode) async {
+    final endpoint = 'rooms/$roomCode';
+    final requestUrl = Uri.parse(Uri.encodeFull('$baseUrl/$endpoint'));
+    final request = http.Request('GET', requestUrl);
+    request.headers['Cache-Control'] = 'no-cache';
+    request.headers['Accept'] = 'text/event-stream';
+    request.headers['Cookie'] = _cookie;
+    return client.send(request);
+  }
+
   static Future<void> closeRoom(String roomCode) async {
     final endpoint = 'rooms/$roomCode/status/0';
     final requestUrl = '$baseUrl/$endpoint';

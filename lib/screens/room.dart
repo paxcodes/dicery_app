@@ -26,7 +26,7 @@ class RoomScreen extends StatelessWidget {
               ),
               SizedBox(height: 50),
               DiceCountForm(roomCode: roomCode),
-              Expanded(child: DiceRollHistory()),
+              Expanded(child: DiceRollHistory(roomCode: roomCode)),
             ],
           ),
         ),

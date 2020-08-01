@@ -26,6 +26,8 @@ class Lobby {
       return [];
     }
 
+    // TODO handle multiple data like
+    // "data:SOMEDATA\r\n\ndata:SOMEDATAAGAIN\r\n\n"
     eventData = eventData.replaceFirst('data: ', '');
     if (eventData == CLOSE_ROOM_COMMAND) {
       return eventData;
