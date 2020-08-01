@@ -59,7 +59,7 @@ class _LobbyStreamState extends State<LobbyStream> {
               } else if (snapshot.hasData) {
                 final data = Lobby.InterpretData(snapshot.data);
                 if (data is List<String>) {
-                  players.addAll(data);
+                  players.insertAll(0, data);
                 }
               }
               return Expanded(
