@@ -1,10 +1,9 @@
+import 'dart:math';
+import 'package:flutter/material.dart';
+
 import 'package:dicery/components/buttons/base_button.dart';
 import 'package:dicery/components/number_picker.dart';
-import 'package:dicery/models/roll_data.dart';
-import 'package:dicery/models/roll_entry.dart';
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'dart:math';
+import 'package:dicery/components/dice_roll_result.dart';
 
 class DiceCountForm extends StatefulWidget {
   final int maxDice = 6;
@@ -20,6 +19,7 @@ class DiceCountForm extends StatefulWidget {
 
 class _DiceCountFormState extends State<DiceCountForm> {
   int _diceCt = 1;
+  List<int> _diceResults;
 
   @override
   Widget build(BuildContext context) {
@@ -69,15 +69,13 @@ class _DiceCountFormState extends State<DiceCountForm> {
           label: 'Roll Dice',
           iconData: Icons.refresh,
           onPressed: () {
-            final diceResults = _rollDice(_diceCt);
-            context.read<RollData>().lastRoll = diceResults;
-            context.read<RollData>().addRollEntry(RollEntry(
-                  player: 'Pax',
-                  rolls: diceResults,
-                  date: DateTime.now(),
-                ));
+            setState(() {
+              _diceResults = _rollDice(_diceCt);
+            });
+            // TODO DiceryApi.sendDiceResults(diceResults);
           },
         ),
+        DiceRollResult(_diceResults),
       ],
     );
   }

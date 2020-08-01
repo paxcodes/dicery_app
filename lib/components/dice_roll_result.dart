@@ -1,16 +1,17 @@
-import 'package:dicery/models/roll_data.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class DiceRollResult extends StatelessWidget {
+  final List<int> _diceRolls;
+
+  DiceRollResult(this._diceRolls);
+
   @override
   Widget build(BuildContext context) {
-    final diceRolls = context.watch<RollData>().lastRoll;
     final themeData = Theme.of(context);
 
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 20),
-      child: diceRolls == null
+      child: _diceRolls == null
           ? Center(
               child: Text(
               'You have not rolled yet.',
@@ -18,7 +19,7 @@ class DiceRollResult extends StatelessWidget {
             ))
           : Wrap(
               children: <Widget>[
-                ...diceRolls.map((int num) => Padding(
+                ..._diceRolls.map((int num) => Padding(
                       padding: const EdgeInsets.all(16.0),
                       child: Text(
                         num.toString(),
