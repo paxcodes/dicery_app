@@ -44,19 +44,23 @@ class _LobbyStreamState extends State<LobbyStream> {
           final streamedResponse = snapshot.data;
           return StreamListenableBuilder<String>(
             stream: streamedResponse.stream.toStringStream(),
-            listener: (value) {
-              final data = Lobby.InterpretData(value);
-              if (data == Lobby.CLOSE_ROOM_COMMAND) {
-                Navigator.pushNamed(context, '/room', arguments: {
-                  'roomOwner': widget.roomOwner,
-                  'roomCode': widget.roomCode,
-                });
-              }
+            afterDisconnectedListener: (snapshot) {},
+            afterDoneListener: (snapshot) {
+              Navigator.pushNamedAndRemoveUntil(
+                  context,
+                  '/room',
+                  // Remove all screens below
+                  (Route<dynamic> route) => false,
+                  arguments: {
+                    'roomOwner': widget.roomOwner,
+                    'roomCode': widget.roomCode,
+                  });
             },
             builder: (context, snapshot) {
               if (snapshot.hasError) {
                 return Text('Error!');
-              } else if (snapshot.hasData) {
+              }
+              if (snapshot.hasData) {
                 final data = Lobby.InterpretData(snapshot.data);
                 if (data is List<String>) {
                   players.insertAll(0, data);
