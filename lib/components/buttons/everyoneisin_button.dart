@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:dicery/components/buttons/base_button.dart';
+import 'package:dicery/utilities/api.dart';
 
 class EveryonesInButton extends StatelessWidget {
   EveryonesInButton({
@@ -18,14 +19,7 @@ class EveryonesInButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return DiceryIconButton.primary(
       label: "Everyone's in",
-      onPressed: playerCount > 1
-          ? () {
-              Navigator.pushNamed(context, '/room', arguments: {
-                'roomOwner': roomOwner,
-                'roomCode': roomCode,
-              });
-            }
-          : null,
+      onPressed: playerCount > 1 ? () => DiceryApi.closeRoom(roomCode) : null,
       iconData: Icons.forward,
     );
   }

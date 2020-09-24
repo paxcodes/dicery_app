@@ -19,7 +19,7 @@ class NameField extends StatelessWidget {
       maxLength: 16,
       maxLengthEnforced: true,
       inputFormatters: <TextInputFormatter>[
-        WhitelistingTextInputFormatter(RegExp(r'[a-zA-Z0-9]'))
+        FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z0-9]'))
       ],
       controller: _controller,
       style: TextStyle(

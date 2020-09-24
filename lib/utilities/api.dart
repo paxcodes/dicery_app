@@ -73,6 +73,60 @@ class DiceryApi {
     request.headers['Cookie'] = _cookie;
     return client.send(request);
   }
+
+  static Future<http.StreamedResponse> subscribeToRoom(
+      http.Client client, String roomCode) async {
+    final endpoint = 'rooms/$roomCode';
+    final requestUrl = Uri.parse(Uri.encodeFull('$baseUrl/$endpoint'));
+    final request = http.Request('GET', requestUrl);
+    request.headers['Cache-Control'] = 'no-cache';
+    request.headers['Accept'] = 'text/event-stream';
+    request.headers['Cookie'] = _cookie;
+    return client.send(request);
+  }
+
+  static Future<void> closeRoom(String roomCode) async {
+    final endpoint = 'rooms/$roomCode/status/0';
+    final requestUrl = '$baseUrl/$endpoint';
+    final headers = {'cookie': _cookie};
+    final response = await http.put(requestUrl, headers: headers);
+    if (response.statusCode == HttpStatus.forbidden) {
+      throw OperationFailedException(
+        response,
+        plainMsg: '🛑 You are not authorized to close the room.',
+      );
+    }
+
+    if (response.statusCode == HttpStatus.notFound) {
+      throw OperationFailedException(
+        response,
+        plainMsg: '🛑 Room does not exist or already closed.',
+      );
+    }
+  }
+
+  static Future<void> sendDiceResults(
+      List<int> _diceResults, String roomCode) async {
+    final endpoint = 'rolls/$roomCode';
+    final requestUrl = '$baseUrl/$endpoint';
+    final requestBody = {'diceRolls': _diceResults.join(',')};
+    final headers = {'cookie': _cookie};
+    final response =
+        await http.post(requestUrl, body: requestBody, headers: headers);
+    if (response.statusCode == HttpStatus.forbidden) {
+      throw OperationFailedException(
+        response,
+        plainMsg: '🛑 You are not a member of this room.',
+      );
+    }
+
+    if (response.statusCode == HttpStatus.notFound) {
+      throw OperationFailedException(
+        response,
+        plainMsg: '🛑 Room does not exist.',
+      );
+    }
+  }
 }
 
 class HttpHelper {
