@@ -47,3 +47,4 @@ app.*.map.json
 # iOS
 **/ios/Flutter/tmp.xcconfig
 **/ios/.envfile
+ios/Flutter/.last_build_id
