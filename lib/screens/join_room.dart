@@ -11,9 +11,15 @@ class JoinRoomScreen extends StatelessWidget {
         iconTheme: Theme.of(context).iconTheme,
         backgroundColor: Theme.of(context).backgroundColor,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(40.0),
-        child: JoinRoomForm(),
+      body: LayoutBuilder(
+        builder: (BuildContext context, BoxConstraints viewportConstraints) =>
+            SingleChildScrollView(
+          padding: const EdgeInsets.symmetric(horizontal: 40.0),
+          child: ConstrainedBox(
+              constraints:
+                  BoxConstraints(minHeight: viewportConstraints.maxHeight),
+              child: JoinRoomForm()),
+        ),
       ),
     );
   }
