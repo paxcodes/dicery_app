@@ -16,7 +16,8 @@ class DiceRollHistory extends StatefulWidget {
   _DiceRollHistoryState createState() => _DiceRollHistoryState();
 }
 
-class _DiceRollHistoryState extends State<DiceRollHistory> {
+class _DiceRollHistoryState extends State<DiceRollHistory>
+    with WidgetsBindingObserver {
   final _client = http.Client();
   final List<RollEntry> _rollEntries = [];
   bool _streamHasError = false;
@@ -25,7 +26,18 @@ class _DiceRollHistoryState extends State<DiceRollHistory> {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
     streamDiceRolls();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    super.didChangeAppLifecycleState(state);
+    if (state == AppLifecycleState.paused) {
+      _streamSubscription.pause();
+    } else if (state == AppLifecycleState.resumed) {
+      _streamSubscription.resume();
+    }
   }
 
   @override
@@ -49,6 +61,7 @@ class _DiceRollHistoryState extends State<DiceRollHistory> {
   @override
   void dispose() {
     _client.close();
+    WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
 
