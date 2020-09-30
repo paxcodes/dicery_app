@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 import 'package:http/http.dart' as http;
@@ -16,54 +18,65 @@ class DiceRollHistory extends StatefulWidget {
 
 class _DiceRollHistoryState extends State<DiceRollHistory> {
   final _client = http.Client();
-  Future<http.StreamedResponse> streamedResponseFuture;
   final List<RollEntry> _rollEntries = [];
+  bool _streamHasError = false;
+  StreamSubscription _streamSubscription;
 
   @override
   void initState() {
-    streamedResponseFuture = Room.Subscribe(_client, widget.roomCode);
     super.initState();
+    streamDiceRolls();
   }
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<http.StreamedResponse>(
-      future: streamedResponseFuture,
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          final streamedResponse = snapshot.data;
-          return StreamBuilder<String>(
-            stream: streamedResponse.stream.toStringStream(),
-            builder: (context, snapshot) {
-              if (snapshot.hasError) {
-                return Text('Error!');
-              } else if (snapshot.hasData) {
-                final data = Room.InterpretData(snapshot.data);
-                if (data is RollEntry) {
-                  _rollEntries.insert(0, data);
-                }
-              }
-              return _rollEntries.isEmpty
-                  ? Text(
-                      'No one has rolled the dice yet.',
-                      style: TextStyle(fontStyle: FontStyle.italic),
-                    )
-                  : ListView.builder(
-                      itemCount: _rollEntries.length,
-                      itemBuilder: (context, index) =>
-                          RollEntryListItem(_rollEntries[index]),
-                    );
-            },
+    if (_streamHasError) {
+      return Expanded(child: Text('Error!'));
+    }
+
+    return _rollEntries.isEmpty
+        ? Text(
+            'No one has rolled the dice yet.',
+            style: TextStyle(fontStyle: FontStyle.italic),
+          )
+        : ListView.builder(
+            itemCount: _rollEntries.length,
+            itemBuilder: (context, index) =>
+                RollEntryListItem(_rollEntries[index]),
           );
-        }
-        return Text('');
-      },
-    );
   }
 
   @override
   void dispose() {
     _client.close();
     super.dispose();
+  }
+
+  void streamDiceRolls() async {
+    var response = await Room.Subscribe(_client, widget.roomCode);
+    var stream = response.stream.toStringStream();
+    _streamSubscription = stream.listen(
+      (newData) {
+        final data = Room.InterpretData(newData);
+        if (data is RollEntry) {
+          setState(() {
+            _rollEntries.insert(0, data);
+          });
+        }
+      },
+      onDone: exitRoom,
+      onError: (err) => setState(() => _streamHasError = true),
+    );
+  }
+
+  void exitRoom() {
+    // TODO Navigate to an "If you enjoyed using the app,"
+    // consider giving the developer a "tip".
+    Navigator.pushNamedAndRemoveUntil(
+      context,
+      '/',
+      // Remove all screens below.
+      (route) => false,
+    );
   }
 }
