@@ -5,6 +5,7 @@ import 'package:dicery/components/forms/name_field.dart';
 import 'package:dicery/components/buttons/base_button.dart';
 import 'package:dicery/styles.dart' as styles;
 import 'package:dicery/utilities/api.dart';
+import 'package:dicery/utilities/uppercase_text_formatter.dart';
 
 class JoinRoomForm extends StatefulWidget {
   const JoinRoomForm({Key key}) : super(key: key);
@@ -34,6 +35,11 @@ class _JoinRoomFormState extends State<JoinRoomForm> {
               hintText: 'Room ID',
               helperText: ' ',
             ),
+            keyboardType: TextInputType.name,
+            inputFormatters: <TextInputFormatter>[
+              UppercaseTextFormatter(),
+              FilteringTextInputFormatter.allow(RegExp(r'[A-Z0-9]'))
+            ],
             validator: (value) =>
                 value.isEmpty ? 'Please enter the room ID.' : null,
           ),

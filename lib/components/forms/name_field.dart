@@ -18,6 +18,7 @@ class NameField extends StatelessWidget {
       validator: (value) => value.isEmpty ? 'Please enter your name.' : null,
       maxLength: 16,
       maxLengthEnforced: true,
+      keyboardType: TextInputType.name,
       inputFormatters: <TextInputFormatter>[
         FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z0-9]'))
       ],
