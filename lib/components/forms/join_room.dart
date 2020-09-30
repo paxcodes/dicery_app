@@ -1,9 +1,10 @@
-import 'package:dicery/utilities/api.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+
 import 'package:dicery/components/forms/name_field.dart';
 import 'package:dicery/components/buttons/base_button.dart';
-
 import 'package:dicery/styles.dart' as styles;
+import 'package:dicery/utilities/api.dart';
 
 class JoinRoomForm extends StatefulWidget {
   const JoinRoomForm({Key key}) : super(key: key);
