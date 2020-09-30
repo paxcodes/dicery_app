@@ -11,9 +11,6 @@ class RollEntryListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       leading: SizedBox(
-        // TODO set size dynamically. Otherwise, long player names
-        // will be wrapped. OR we can set a character limit to
-        // player names.
         width: 80,
         child: Text(
           rollEntry.player,
