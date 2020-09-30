@@ -6,7 +6,7 @@ Roll the dice with your friends. This is useful when remotely playing role-playi
 
 ## Prototype
 
-![Dicery Prototype](https://user-images.githubusercontent.com/13646646/94150565-2622ff80-fe2e-11ea-9233-0a873e5e5122.gif)
+![Dicery Prototype](https://user-images.githubusercontent.com/13646646/94694372-9f689980-02e9-11eb-9582-2f5d20bc95a2.gif)
 
 Made with [Flutter](https://flutter.dev)
 
