@@ -23,7 +23,7 @@ class LobbyStream extends StatefulWidget {
   _LobbyStreamState createState() => _LobbyStreamState();
 }
 
-class _LobbyStreamState extends State<LobbyStream> {
+class _LobbyStreamState extends State<LobbyStream> with WidgetsBindingObserver {
   final _client = http.Client();
   final players = <String>[];
   bool _streamHasError = false;
@@ -32,7 +32,18 @@ class _LobbyStreamState extends State<LobbyStream> {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
     streamPlayersJoining();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    super.didChangeAppLifecycleState(state);
+    if (state == AppLifecycleState.paused) {
+      _streamSubscription.pause();
+    } else if (state == AppLifecycleState.resumed) {
+      _streamSubscription.resume();
+    }
   }
 
   @override
@@ -63,6 +74,7 @@ class _LobbyStreamState extends State<LobbyStream> {
 
   @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
     _client.close();
     super.dispose();
   }
