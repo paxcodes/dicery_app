@@ -18,9 +18,8 @@ class Lobby {
     return streamedResponseFuture;
   }
 
-  /// Returns `CLOSE_ROOM_COMMAND` if data is for CLOSING the room.
-  /// Otherwise, it returns `List<String>` of new players.
-  static dynamic InterpretData(String eventData) {
+  /// Returns `List<String>` of new players.
+  static List<String> InterpretData(String eventData) {
     eventData = eventData.trim();
     if (!eventData.startsWith('data: ')) {
       return [];
@@ -29,10 +28,6 @@ class Lobby {
     // TODO handle multiple data like
     // "data:SOMEDATA\r\n\ndata:SOMEDATAAGAIN\r\n\n"
     eventData = eventData.replaceFirst('data: ', '');
-    if (eventData == CLOSE_ROOM_COMMAND) {
-      return eventData;
-    } else {
-      return eventData.split(',');
-    }
+    return eventData.split(',');
   }
 }

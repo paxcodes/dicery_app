@@ -1,12 +1,11 @@
 import 'dart:async';
-import 'package:dicery/utilities/lobby.dart';
 import 'package:flutter/material.dart';
 
 import 'package:http/http.dart' as http;
 
 import 'package:dicery/components/buttons/everyoneisin_button.dart';
 import 'package:dicery/components/player_card.dart';
-import 'package:dicery/components/stream_listenable_builder.dart';
+import 'package:dicery/utilities/lobby.dart';
 
 class LobbyStream extends StatefulWidget {
   const LobbyStream({
@@ -24,77 +23,87 @@ class LobbyStream extends StatefulWidget {
   _LobbyStreamState createState() => _LobbyStreamState();
 }
 
-class _LobbyStreamState extends State<LobbyStream> {
+class _LobbyStreamState extends State<LobbyStream> with WidgetsBindingObserver {
   final _client = http.Client();
-  Future<http.StreamedResponse> streamedResponseFuture;
   final players = <String>[];
+  bool _streamHasError = false;
+  StreamSubscription _streamSubscription;
 
   @override
   void initState() {
-    streamedResponseFuture = Lobby.Subscribe(_client, widget.roomCode);
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
+    streamPlayersJoining();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    super.didChangeAppLifecycleState(state);
+    if (state == AppLifecycleState.paused) {
+      _streamSubscription.pause();
+    } else if (state == AppLifecycleState.resumed) {
+      _streamSubscription.resume();
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<http.StreamedResponse>(
-      future: streamedResponseFuture,
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          final streamedResponse = snapshot.data;
-          return StreamListenableBuilder<String>(
-            stream: streamedResponse.stream.toStringStream(),
-            afterDisconnectedListener: (snapshot) {},
-            afterDoneListener: (snapshot) {
-              Navigator.pushNamedAndRemoveUntil(
-                  context,
-                  '/room',
-                  // Remove all screens below
-                  (Route<dynamic> route) => false,
-                  arguments: {
-                    'roomOwner': widget.roomOwner,
-                    'roomCode': widget.roomCode,
-                  });
-            },
-            builder: (context, snapshot) {
-              if (snapshot.hasError) {
-                return Text('Error!');
-              }
-              if (snapshot.hasData) {
-                final data = Lobby.InterpretData(snapshot.data);
-                if (data is List<String>) {
-                  players.insertAll(0, data);
-                }
-              }
-              return Expanded(
-                child: Column(
-                  children: <Widget>[
-                    Expanded(
-                      child: ListView.builder(
-                        itemCount: players.length,
-                        itemBuilder: (context, index) =>
-                            PlayerCard(emoji: '✨', name: players[index]),
-                      ),
-                    ),
-                    if (widget.isOwnedByUser)
-                      EveryonesInButton(
-                          playerCount: players.length,
-                          roomOwner: widget.roomOwner,
-                          roomCode: widget.roomCode),
-                  ],
-                ),
-              );
-            },
-          );
-        }
-        return Text('');
-      },
+    if (_streamHasError) {
+      return Expanded(child: Text('Error!'));
+    }
+
+    return Expanded(
+      child: Column(
+        children: <Widget>[
+          Expanded(
+            child: ListView.builder(
+              itemCount: players.length,
+              itemBuilder: (context, index) =>
+                  PlayerCard(emoji: '✨', name: players[index]),
+            ),
+          ),
+          if (widget.isOwnedByUser)
+            EveryonesInButton(
+                playerCount: players.length,
+                roomOwner: widget.roomOwner,
+                roomCode: widget.roomCode),
+        ],
+      ),
     );
   }
 
   @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
     _client.close();
     super.dispose();
+  }
+
+  void streamPlayersJoining() async {
+    var response = await Lobby.Subscribe(_client, widget.roomCode);
+    var stream = response.stream.toStringStream();
+    _streamSubscription = stream.listen(
+      (data) {
+        final newPlayers = Lobby.InterpretData(data);
+        if (newPlayers.isNotEmpty) {
+          setState(() => players.insertAll(0, newPlayers));
+        }
+      },
+      onDone: exitLobby,
+      onError: (err) => setState(() => _streamHasError = true),
+    );
+  }
+
+  void exitLobby() {
+    Navigator.pushNamedAndRemoveUntil(
+      context,
+      '/room',
+      // Remove all screens below.
+      (route) => false,
+      arguments: {
+        'roomOwner': widget.roomOwner,
+        'roomCode': widget.roomCode,
+      },
+    );
   }
 }
