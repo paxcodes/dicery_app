@@ -22,17 +22,7 @@ if (flutterVersionName == null) {
 }
 
 apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
-
-project.ext.envConfigFiles = [
-    debug: ".env.android.development",
-    staging: ".env.staging",
-    release: ".env.production"
-]
-
-apply from: project(':flutter_config').projectDir.getPath() + "/dotenv.gradle"
 
 android {
     compileSdkVersion 28
@@ -61,8 +51,4 @@ android {
 
 flutter {
     source '../..'
-}
-
-dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }

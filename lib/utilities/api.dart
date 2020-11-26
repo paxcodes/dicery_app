@@ -1,15 +1,13 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:meta/meta.dart';
-import 'package:flutter_config/flutter_config.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:dicery/models/room.dart';
 
 class DiceryApi {
-  static final String baseUrl = FlutterConfig.get('API_URL');
   static String _cookie = '';
+  static const String baseUrl = 'http://localhost:8000';
 
   /// Creates a room.
   ///
