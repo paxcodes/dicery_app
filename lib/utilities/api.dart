@@ -1,7 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
-
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
+import 'package:http/browser_client.dart';
 
 import 'package:dicery/models/room.dart';
 import 'package:dicery/env/env.dart';
@@ -10,15 +11,28 @@ import 'package:meta/meta.dart';
 class DiceryApi {
   static String _cookie = '';
   static const String baseUrl = Env.apiUrl;
+  static dynamic _client;
+
+  DiceryApi() {
+    if (kIsWeb) {
+      _client = BrowserClient();
+      _client.withCredentials = true;
+    } else {
+      _client = http.Client();
+    }
+  }
+
+  void dispose() {
+    _client.close();
+  }
 
   /// Creates a room.
   ///
   /// Returns the room info: code, owner, isAvailable.
-  static Future<Room> createRoom(String roomOwner) async {
+  Future<Room> createRoom(String roomOwner) async {
     final requestBody = {'room_owner': roomOwner};
-    final endpoint = 'rooms';
-    final requestUrl = '$baseUrl/$endpoint';
-    final response = await http.post(requestUrl, body: requestBody);
+    final requestUrl = '$baseUrl/rooms';
+    final response = await _client.post(requestUrl, body: requestBody);
 
     if (!HttpHelper.isOk(response)) {
       throw OperationFailedException(
@@ -27,10 +41,12 @@ class DiceryApi {
       );
     }
 
-    // TODO store cookie in secure storage?
-    var rawCookie = response.headers['set-cookie'];
-    var index = rawCookie.indexOf(';');
-    _cookie = (index == -1) ? rawCookie : rawCookie.substring(0, index);
+    if (!kIsWeb) {
+      // TODO store cookie in secure storage?
+      var rawCookie = response.headers['set-cookie'];
+      var index = rawCookie.indexOf(';');
+      _cookie = (index == -1) ? rawCookie : rawCookie.substring(0, index);
+    }
     return Room.fromJson(jsonDecode(response.body));
   }
 
