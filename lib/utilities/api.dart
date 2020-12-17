@@ -4,10 +4,12 @@ import 'dart:io';
 import 'package:http/http.dart' as http;
 
 import 'package:dicery/models/room.dart';
+import 'package:dicery/env/env.dart';
+import 'package:meta/meta.dart';
 
 class DiceryApi {
   static String _cookie = '';
-  static const String baseUrl = 'http://localhost:8000';
+  static const String baseUrl = Env.apiUrl;
 
   /// Creates a room.
   ///
