@@ -1,11 +1,11 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:flutter/foundation.dart';
-import 'package:http/http.dart' as http;
-import 'package:http/browser_client.dart';
 
-import 'package:dicery/models/room.dart';
 import 'package:dicery/env/env.dart';
+import 'package:dicery/models/room.dart';
+import 'package:flutter/foundation.dart';
+import 'package:http/browser_client.dart';
+import 'package:http/http.dart' as http;
 import 'package:meta/meta.dart';
 import 'package:sse/client/sse_client.dart';
 
@@ -51,11 +51,11 @@ class DiceryApi {
     return Room.fromJson(jsonDecode(response.body));
   }
 
-  static Future<Room> authenticate(String roomCode, String player) async {
+  Future<Room> authenticate(String roomCode, String player) async {
     final requestBody = {'room_code': roomCode, 'player': player};
     final endpoint = 'token';
     final requestUrl = Uri.encodeFull('$baseUrl/$endpoint');
-    final response = await http.post(requestUrl, body: requestBody);
+    final response = await _client.post(requestUrl, body: requestBody);
 
     if (response.statusCode == HttpStatus.forbidden ||
         response.statusCode == HttpStatus.notFound) {
@@ -73,10 +73,12 @@ class DiceryApi {
       );
     }
 
-    // TODO store cookie in Secure Storage?
-    var rawCookie = response.headers['set-cookie'];
-    var index = rawCookie.indexOf(';');
-    _cookie = (index == -1) ? rawCookie : rawCookie.substring(0, index);
+    if (!kIsWeb) {
+      // TODO store cookie in secure storage?
+      var rawCookie = response.headers['set-cookie'];
+      var index = rawCookie.indexOf(';');
+      _cookie = (index == -1) ? rawCookie : rawCookie.substring(0, index);
+    }
     return Room.fromJson(jsonDecode(response.body));
   }
 
