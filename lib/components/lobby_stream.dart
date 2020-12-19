@@ -1,11 +1,11 @@
 import 'dart:async';
-import 'package:flutter/material.dart';
-
-import 'package:http/http.dart' as http;
 
 import 'package:dicery/components/buttons/everyoneisin_button.dart';
 import 'package:dicery/components/player_card.dart';
+import 'package:dicery/utilities/api.dart';
 import 'package:dicery/utilities/lobby.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 
 class LobbyStream extends StatefulWidget {
   const LobbyStream({
@@ -24,7 +24,6 @@ class LobbyStream extends StatefulWidget {
 }
 
 class _LobbyStreamState extends State<LobbyStream> with WidgetsBindingObserver {
-  final _client = http.Client();
   final players = <String>[];
   bool _streamHasError = false;
   StreamSubscription _streamSubscription;
@@ -75,13 +74,13 @@ class _LobbyStreamState extends State<LobbyStream> with WidgetsBindingObserver {
   @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
-    _client.close();
     super.dispose();
   }
 
   void streamPlayersJoining() async {
-    var response = await Lobby.Subscribe(_client, widget.roomCode);
-    var stream = response.stream.toStringStream();
+    var api = DiceryApi();
+    var channel = await Lobby.Subscribe(api, widget.roomCode);
+    var stream = (kIsWeb) ? channel.stream : channel.stream.toStringStream();
     _streamSubscription = stream.listen(
       (data) {
         final newPlayers = Lobby.InterpretData(data);

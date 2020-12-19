@@ -1,17 +1,14 @@
 import 'dart:async';
 
-import 'package:http/http.dart' as http;
-
-import 'package:dicery/utilities/api.dart';
+import 'package:flutter/foundation.dart';
 
 class Lobby {
   static const CLOSE_ROOM_COMMAND = '***CLOSE_ROOM***';
 
-  static Future<http.StreamedResponse> Subscribe(
-      http.Client client, String roomCode) {
+  static Future<dynamic> Subscribe(api, String roomCode) {
     var streamedResponseFuture;
     try {
-      streamedResponseFuture = DiceryApi.joinLobby(client, roomCode);
+      streamedResponseFuture = api.joinLobby(roomCode);
     } catch (e) {
       print('Caught $e');
     }
@@ -20,14 +17,16 @@ class Lobby {
 
   /// Returns `List<String>` of new players.
   static List<String> InterpretData(String eventData) {
-    eventData = eventData.trim();
-    if (!eventData.startsWith('data: ')) {
-      return [];
+    if (!kIsWeb) {
+      eventData = eventData.trim();
+      if (!eventData.startsWith('data: ')) {
+        return [];
+      }
+      // TODO handle multiple data like
+      // "data:SOMEDATA\r\n\ndata:SOMEDATAAGAIN\r\n\n"
+      eventData = eventData.replaceFirst('data: ', '');
     }
 
-    // TODO handle multiple data like
-    // "data:SOMEDATA\r\n\ndata:SOMEDATAAGAIN\r\n\n"
-    eventData = eventData.replaceFirst('data: ', '');
     return eventData.split(',');
   }
 }

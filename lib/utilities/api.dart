@@ -7,6 +7,7 @@ import 'package:http/browser_client.dart';
 import 'package:dicery/models/room.dart';
 import 'package:dicery/env/env.dart';
 import 'package:meta/meta.dart';
+import 'package:sse/client/sse_client.dart';
 
 class DiceryApi {
   static String _cookie = '';
@@ -79,15 +80,16 @@ class DiceryApi {
     return Room.fromJson(jsonDecode(response.body));
   }
 
-  static Future<http.StreamedResponse> joinLobby(
-      http.Client client, String roomCode) async {
+  dynamic joinLobby(String roomCode) async {
     final endpoint = 'lobby/$roomCode';
-    final request =
-        http.Request('GET', Uri.parse(Uri.encodeFull('$baseUrl/$endpoint')));
-    request.headers['Cache-Control'] = 'no-cache';
-    request.headers['Accept'] = 'text/event-stream';
-    request.headers['Cookie'] = _cookie;
-    return client.send(request);
+    final requestUrl = Uri.encodeFull('$baseUrl/$endpoint');
+    if (!kIsWeb) {
+      final request = http.Request('GET', Uri.parse(requestUrl));
+      request.headers['Accept'] = 'text/event-stream';
+      request.headers['Cookie'] = _cookie;
+      return _client.send(request);
+    }
+    return SseClient(requestUrl);
   }
 
   static Future<http.StreamedResponse> subscribeToRoom(
