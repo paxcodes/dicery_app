@@ -1,12 +1,11 @@
 import 'dart:async';
 
-import 'package:flutter/material.dart';
-
-import 'package:http/http.dart' as http;
-
 import 'package:dicery/components/roll_entry_list_item.dart';
 import 'package:dicery/models/roll_entry.dart';
+import 'package:dicery/utilities/api.dart';
 import 'package:dicery/utilities/room.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 
 class DiceRollHistory extends StatefulWidget {
   final String roomCode;
@@ -18,7 +17,6 @@ class DiceRollHistory extends StatefulWidget {
 
 class _DiceRollHistoryState extends State<DiceRollHistory>
     with WidgetsBindingObserver {
-  final _client = http.Client();
   final List<RollEntry> _rollEntries = [];
   bool _streamHasError = false;
   StreamSubscription _streamSubscription;
@@ -60,14 +58,14 @@ class _DiceRollHistoryState extends State<DiceRollHistory>
 
   @override
   void dispose() {
-    _client.close();
     WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
 
   void streamDiceRolls() async {
-    var response = await Room.Subscribe(_client, widget.roomCode);
-    var stream = response.stream.toStringStream();
+    var api = DiceryApi();
+    var channel = await Room.Subscribe(api, widget.roomCode);
+    var stream = (kIsWeb) ? channel.stream : channel.stream.toStringStream();
     _streamSubscription = stream.listen(
       (newData) {
         final data = Room.InterpretData(newData);

@@ -94,15 +94,17 @@ class DiceryApi {
     return SseClient(requestUrl);
   }
 
-  static Future<http.StreamedResponse> subscribeToRoom(
-      http.Client client, String roomCode) async {
+  Future<dynamic> subscribeToRoom(String roomCode) async {
     final endpoint = 'rooms/$roomCode';
-    final requestUrl = Uri.parse(Uri.encodeFull('$baseUrl/$endpoint'));
-    final request = http.Request('GET', requestUrl);
-    request.headers['Cache-Control'] = 'no-cache';
-    request.headers['Accept'] = 'text/event-stream';
-    request.headers['Cookie'] = _cookie;
-    return client.send(request);
+    final requestUrl = Uri.encodeFull('$baseUrl/$endpoint');
+    if (!kIsWeb) {
+      final request = http.Request('GET', Uri.parse(requestUrl));
+      request.headers['Cache-Control'] = 'no-cache';
+      request.headers['Accept'] = 'text/event-stream';
+      request.headers['Cookie'] = _cookie;
+      return _client.send(request);
+    }
+    return SseClient(requestUrl);
   }
 
   static Future<void> closeRoom(String roomCode) async {

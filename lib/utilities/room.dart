@@ -3,11 +3,10 @@ import 'package:dicery/utilities/api.dart';
 import 'package:http/http.dart' as http;
 
 class Room {
-  static Future<http.StreamedResponse> Subscribe(
-      http.Client client, String roomCode) async {
+  static Future<dynamic> Subscribe(api, String roomCode) async {
     var streamedResponseFuture;
     try {
-      streamedResponseFuture = DiceryApi.subscribeToRoom(client, roomCode);
+      streamedResponseFuture = api.subscribeToRoom(roomCode);
     } catch (e) {
       print('Caught $e');
     }
