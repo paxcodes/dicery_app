@@ -107,11 +107,10 @@ class DiceryApi {
     return SseClient(requestUrl);
   }
 
-  static Future<void> closeRoom(String roomCode) async {
+  Future<void> closeRoom(String roomCode) async {
     final endpoint = 'rooms/$roomCode/status/0';
     final requestUrl = '$baseUrl/$endpoint';
-    final headers = {'cookie': _cookie};
-    final response = await http.put(requestUrl, headers: headers);
+    final response = await _client.put(requestUrl);
     if (response.statusCode == HttpStatus.forbidden) {
       throw OperationFailedException(
         response,
