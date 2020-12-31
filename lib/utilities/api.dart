@@ -131,9 +131,15 @@ class DiceryApi {
     final endpoint = 'rolls/$roomCode';
     final requestUrl = '$baseUrl/$endpoint';
     final requestBody = {'diceRolls': _diceResults.join(',')};
-    final headers = {'cookie': _cookie};
-    final response =
-        await http.post(requestUrl, body: requestBody, headers: headers);
+    var response;
+    if (!kIsWeb) {
+      final headers = {'cookie': _cookie};
+      response =
+          await http.post(requestUrl, body: requestBody, headers: headers);
+    } else {
+      response = await _client.post(requestUrl, body: requestBody);
+    }
+
     if (response.statusCode == HttpStatus.forbidden) {
       throw OperationFailedException(
         response,
