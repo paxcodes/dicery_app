@@ -28,6 +28,8 @@ class _LobbyStreamState extends State<LobbyStream> with WidgetsBindingObserver {
   List<String> players = <String>[];
   bool _streamHasError = false;
   StreamSubscription _streamSubscription;
+  DiceryApi api = DiceryApi();
+  var channel;
 
   @override
   void initState() {
@@ -79,11 +81,14 @@ class _LobbyStreamState extends State<LobbyStream> with WidgetsBindingObserver {
   }
 
   void streamPlayersJoining() async {
-    var api = DiceryApi();
-    var channel = await Lobby.Subscribe(api, widget.roomCode);
+    channel = await Lobby.Subscribe(api, widget.roomCode);
     var stream = (kIsWeb) ? channel.stream : channel.stream.toStringStream();
     _streamSubscription = stream.listen(
       (data) {
+        if (data == Lobby.CLOSE_ROOM_COMMAND) {
+          channel.close();
+          return;
+        }
         final newPlayers = Lobby.InterpretData(data);
         if (!(const IterableEquality().equals(newPlayers, players))) {
           players.addAll(newPlayers);
