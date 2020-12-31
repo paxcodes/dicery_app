@@ -1,10 +1,10 @@
 import 'dart:math';
-import 'package:flutter/material.dart';
 
 import 'package:dicery/components/buttons/base_button.dart';
-import 'package:dicery/components/number_picker.dart';
 import 'package:dicery/components/dice_roll_result.dart';
+import 'package:dicery/components/number_picker.dart';
 import 'package:dicery/utilities/api.dart';
+import 'package:flutter/material.dart';
 
 class DiceCountForm extends StatefulWidget {
   final String roomCode;
@@ -28,6 +28,7 @@ class _DiceCountFormState extends State<DiceCountForm> {
     return Column(
       children: <Widget>[
         Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
               '# of Dice',
