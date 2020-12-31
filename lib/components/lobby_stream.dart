@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:collection/collection.dart';
 import 'package:dicery/components/buttons/everyoneisin_button.dart';
 import 'package:dicery/components/player_card.dart';
 import 'package:dicery/utilities/api.dart';
@@ -24,7 +25,7 @@ class LobbyStream extends StatefulWidget {
 }
 
 class _LobbyStreamState extends State<LobbyStream> with WidgetsBindingObserver {
-  final players = <String>[];
+  List<String> players = <String>[];
   bool _streamHasError = false;
   StreamSubscription _streamSubscription;
 
@@ -84,8 +85,11 @@ class _LobbyStreamState extends State<LobbyStream> with WidgetsBindingObserver {
     _streamSubscription = stream.listen(
       (data) {
         final newPlayers = Lobby.InterpretData(data);
-        if (newPlayers.isNotEmpty) {
-          setState(() => players.insertAll(0, newPlayers));
+        if (!(const IterableEquality().equals(newPlayers, players))) {
+          players.addAll(newPlayers);
+          setState(() {
+            players = players.toSet().toList();
+          });
         }
       },
       onDone: exitLobby,

@@ -21,6 +21,7 @@ dependencies:
   meta: ^1.1.8
   envify: ^1.0.6
   sse: ^3.6.0
+  collection: ^1.14.13
 
 dev_dependencies:
   flutter_test:
