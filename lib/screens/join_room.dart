@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:dicery/components/forms/join_room.dart';
+import 'package:flutter/material.dart';
 
 class JoinRoomScreen extends StatelessWidget {
   @override

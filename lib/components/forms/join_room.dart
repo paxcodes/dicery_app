@@ -6,6 +6,7 @@ import 'package:dicery/components/buttons/base_button.dart';
 import 'package:dicery/styles.dart' as styles;
 import 'package:dicery/utilities/api.dart';
 import 'package:dicery/utilities/uppercase_text_formatter.dart';
+import 'package:provider/provider.dart';
 
 class JoinRoomForm extends StatefulWidget {
   const JoinRoomForm({Key key}) : super(key: key);
@@ -21,6 +22,8 @@ class _JoinRoomFormState extends State<JoinRoomForm> {
 
   @override
   Widget build(BuildContext context) {
+    final api = context.watch<DiceryApi>();
+
     return Form(
       key: _formKey,
       child: Column(
@@ -65,7 +68,7 @@ class _JoinRoomFormState extends State<JoinRoomForm> {
 
               var room;
               try {
-                room = await DiceryApi.authenticate(roomCode, player);
+                room = await api.authenticate(roomCode, player);
               } on OperationFailedException catch (e) {
                 Scaffold.of(context).showSnackBar(
                   SnackBar(

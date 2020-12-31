@@ -1,24 +1,39 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:http/http.dart' as http;
-
-import 'package:dicery/models/room.dart';
 import 'package:dicery/env/env.dart';
+import 'package:dicery/models/room.dart';
+import 'package:flutter/foundation.dart';
+import 'package:http/browser_client.dart';
+import 'package:http/http.dart' as http;
 import 'package:meta/meta.dart';
+import 'package:sse/client/sse_client.dart';
 
 class DiceryApi {
   static String _cookie = '';
   static const String baseUrl = Env.apiUrl;
+  static dynamic _client;
+
+  DiceryApi() {
+    if (kIsWeb) {
+      _client = BrowserClient();
+      _client.withCredentials = true;
+    } else {
+      _client = http.Client();
+    }
+  }
+
+  void dispose() {
+    _client.close();
+  }
 
   /// Creates a room.
   ///
   /// Returns the room info: code, owner, isAvailable.
-  static Future<Room> createRoom(String roomOwner) async {
+  Future<Room> createRoom(String roomOwner) async {
     final requestBody = {'room_owner': roomOwner};
-    final endpoint = 'rooms';
-    final requestUrl = '$baseUrl/$endpoint';
-    final response = await http.post(requestUrl, body: requestBody);
+    final requestUrl = '$baseUrl/rooms';
+    final response = await _client.post(requestUrl, body: requestBody);
 
     if (!HttpHelper.isOk(response)) {
       throw OperationFailedException(
@@ -27,18 +42,20 @@ class DiceryApi {
       );
     }
 
-    // TODO store cookie in secure storage?
-    var rawCookie = response.headers['set-cookie'];
-    var index = rawCookie.indexOf(';');
-    _cookie = (index == -1) ? rawCookie : rawCookie.substring(0, index);
+    if (!kIsWeb) {
+      // TODO store cookie in secure storage?
+      var rawCookie = response.headers['set-cookie'];
+      var index = rawCookie.indexOf(';');
+      _cookie = (index == -1) ? rawCookie : rawCookie.substring(0, index);
+    }
     return Room.fromJson(jsonDecode(response.body));
   }
 
-  static Future<Room> authenticate(String roomCode, String player) async {
+  Future<Room> authenticate(String roomCode, String player) async {
     final requestBody = {'room_code': roomCode, 'player': player};
     final endpoint = 'token';
     final requestUrl = Uri.encodeFull('$baseUrl/$endpoint');
-    final response = await http.post(requestUrl, body: requestBody);
+    final response = await _client.post(requestUrl, body: requestBody);
 
     if (response.statusCode == HttpStatus.forbidden ||
         response.statusCode == HttpStatus.notFound) {
@@ -56,40 +73,44 @@ class DiceryApi {
       );
     }
 
-    // TODO store cookie in Secure Storage?
-    var rawCookie = response.headers['set-cookie'];
-    var index = rawCookie.indexOf(';');
-    _cookie = (index == -1) ? rawCookie : rawCookie.substring(0, index);
+    if (!kIsWeb) {
+      // TODO store cookie in secure storage?
+      var rawCookie = response.headers['set-cookie'];
+      var index = rawCookie.indexOf(';');
+      _cookie = (index == -1) ? rawCookie : rawCookie.substring(0, index);
+    }
     return Room.fromJson(jsonDecode(response.body));
   }
 
-  static Future<http.StreamedResponse> joinLobby(
-      http.Client client, String roomCode) async {
+  dynamic joinLobby(String roomCode) async {
     final endpoint = 'lobby/$roomCode';
-    final request =
-        http.Request('GET', Uri.parse(Uri.encodeFull('$baseUrl/$endpoint')));
-    request.headers['Cache-Control'] = 'no-cache';
-    request.headers['Accept'] = 'text/event-stream';
-    request.headers['Cookie'] = _cookie;
-    return client.send(request);
+    final requestUrl = Uri.encodeFull('$baseUrl/$endpoint');
+    if (!kIsWeb) {
+      final request = http.Request('GET', Uri.parse(requestUrl));
+      request.headers['Accept'] = 'text/event-stream';
+      request.headers['Cookie'] = _cookie;
+      return _client.send(request);
+    }
+    return SseClient(requestUrl);
   }
 
-  static Future<http.StreamedResponse> subscribeToRoom(
-      http.Client client, String roomCode) async {
+  Future<dynamic> subscribeToRoom(String roomCode) async {
     final endpoint = 'rooms/$roomCode';
-    final requestUrl = Uri.parse(Uri.encodeFull('$baseUrl/$endpoint'));
-    final request = http.Request('GET', requestUrl);
-    request.headers['Cache-Control'] = 'no-cache';
-    request.headers['Accept'] = 'text/event-stream';
-    request.headers['Cookie'] = _cookie;
-    return client.send(request);
+    final requestUrl = Uri.encodeFull('$baseUrl/$endpoint');
+    if (!kIsWeb) {
+      final request = http.Request('GET', Uri.parse(requestUrl));
+      request.headers['Cache-Control'] = 'no-cache';
+      request.headers['Accept'] = 'text/event-stream';
+      request.headers['Cookie'] = _cookie;
+      return _client.send(request);
+    }
+    return SseClient(requestUrl);
   }
 
-  static Future<void> closeRoom(String roomCode) async {
+  Future<void> closeRoom(String roomCode) async {
     final endpoint = 'rooms/$roomCode/status/0';
     final requestUrl = '$baseUrl/$endpoint';
-    final headers = {'cookie': _cookie};
-    final response = await http.put(requestUrl, headers: headers);
+    final response = await _client.put(requestUrl);
     if (response.statusCode == HttpStatus.forbidden) {
       throw OperationFailedException(
         response,

@@ -1,8 +1,8 @@
-import 'package:dicery/components/forms/name_field.dart';
-import 'package:flutter/material.dart';
-
 import 'package:dicery/components/buttons/base_button.dart';
+import 'package:dicery/components/forms/name_field.dart';
 import 'package:dicery/utilities/api.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class CreateRoomForm extends StatefulWidget {
   const CreateRoomForm({
@@ -19,6 +19,8 @@ class _CreateRoomFormState extends State<CreateRoomForm> {
 
   @override
   Widget build(BuildContext context) {
+    final api = context.watch<DiceryApi>();
+
     return Form(
       key: _formKey,
       child: Column(
@@ -37,7 +39,8 @@ class _CreateRoomFormState extends State<CreateRoomForm> {
                   ),
                 );
                 final roomOwner = _nameFieldController.text;
-                final room = await DiceryApi.createRoom(roomOwner);
+
+                final room = await api.createRoom(roomOwner);
                 await Navigator.pushNamedAndRemoveUntil(
                   context,
                   '/lobby',

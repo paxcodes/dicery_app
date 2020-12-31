@@ -1,13 +1,11 @@
 import 'package:dicery/models/roll_entry.dart';
-import 'package:dicery/utilities/api.dart';
-import 'package:http/http.dart' as http;
+import 'package:flutter/foundation.dart';
 
 class Room {
-  static Future<http.StreamedResponse> Subscribe(
-      http.Client client, String roomCode) async {
+  static Future<dynamic> Subscribe(api, String roomCode) async {
     var streamedResponseFuture;
     try {
-      streamedResponseFuture = DiceryApi.subscribeToRoom(client, roomCode);
+      streamedResponseFuture = api.subscribeToRoom(roomCode);
     } catch (e) {
       print('Caught $e');
     }
@@ -17,17 +15,19 @@ class Room {
   /// Returns a `RollEntry` if eventData is a roll entry
   /// Otherwise, null.
   static dynamic InterpretData(String eventData) {
-    eventData = eventData.trim();
-    if (!eventData.startsWith('data: ')) {
-      return;
+    if (!kIsWeb) {
+      eventData = eventData.trim();
+      if (!eventData.startsWith('data: ')) {
+        return;
+      }
+
+      // TODO Handle multiple data, e.g.
+      // "data: SOMEDATA\r\n\ndata:SOMEDATAAGAIN\r\n\n"
+      // final diceRollEntries = eventData.split('\r\n\n');
+      // for ()
+
+      eventData = eventData.replaceFirst('data: ', '');
     }
-
-    // TODO Handle multiple data, e.g.
-    // "data: SOMEDATA\r\n\ndata:SOMEDATAAGAIN\r\n\n"
-    // final diceRollEntries = eventData.split('\r\n\n');
-    // for ()
-
-    eventData = eventData.replaceFirst('data: ', '');
     final diceRollEntry = eventData.split('|');
     return RollEntry(
       player: diceRollEntry[0],
