@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:dicery/env/env.dart';
 import 'package:dicery/models/room.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/browser_client.dart';
@@ -11,7 +10,7 @@ import 'package:sse/client/sse_client.dart';
 
 class DiceryApi {
   static String _cookie = '';
-  static const String baseUrl = Env.apiUrl;
+  static const String baseUrl = 'https://stag.api.dicery.margret.pw';
   static dynamic _client;
 
   DiceryApi() {
