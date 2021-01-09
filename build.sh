@@ -1,6 +1,8 @@
 #!/bin/bash
 
-FLUTTER_BRANCH=`grep channel: .metadata | sed 's/  channel: //g'`
+# I have to set flutter channel to beta for `web` to be supported
+# https://flutter.dev/docs/get-started/web accessed on 2021-Jan-09
+FLUTTER_BRANCH=beta
 
 # Get flutter
 git clone https://github.com/flutter/flutter.git
