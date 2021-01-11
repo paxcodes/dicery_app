@@ -45,9 +45,15 @@ class _DiceRollHistoryState extends State<DiceRollHistory>
     }
 
     return _rollEntries.isEmpty
-        ? Text(
-            'No one has rolled the dice yet.',
-            style: TextStyle(fontStyle: FontStyle.italic),
+        ? Padding(
+            padding: const EdgeInsets.symmetric(vertical: 32.0),
+            child: Text(
+              'No one has rolled the dice yet.',
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyText1
+                  .copyWith(fontStyle: FontStyle.italic),
+            ),
           )
         : ListView.builder(
             itemCount: _rollEntries.length,
