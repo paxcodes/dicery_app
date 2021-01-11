@@ -25,14 +25,13 @@ class DiceRollResult extends StatelessWidget {
                     padding: const EdgeInsets.all(16.0),
                     child: Text(
                       num.toString(),
-                      style: TextStyle(
-                        fontFamily: 'RobotoMono',
-                        fontSize: 30,
-                        fontWeight: FontWeight.bold,
-                        color: num == 1
-                            ? themeData.accentColor
-                            : themeData.primaryColor,
-                      ),
+                      style: Theme.of(context).textTheme.bodyText1.copyWith(
+                            fontFamily: 'RobotoMono',
+                            fontWeight: FontWeight.bold,
+                            color: num == 1
+                                ? themeData.accentColor
+                                : themeData.primaryColor,
+                          ),
                     ),
                   ),
                 ),
@@ -44,12 +43,11 @@ class DiceRollResult extends StatelessWidget {
                   ),
                   padding: const EdgeInsets.all(12.0),
                   child: Text(_diceRolls.reduce((a, b) => a + b).toString(),
-                      style: TextStyle(
-                        fontFamily: 'RobotoMono',
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                        color: themeData.backgroundColor,
-                      )),
+                      style: Theme.of(context).textTheme.bodyText1.copyWith(
+                            fontFamily: 'RobotoMono',
+                            fontWeight: FontWeight.bold,
+                            color: themeData.backgroundColor,
+                          )),
                 ),
               ],
             ),
