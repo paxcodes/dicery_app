@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:dicery/models/roll_entry.dart';
 import 'package:dicery/utilities/player_colourizer.dart';
+import 'package:flutter/material.dart';
 import 'package:timeago_flutter/timeago_flutter.dart';
 
 class RollEntryListItem extends StatelessWidget {
@@ -18,11 +18,10 @@ class RollEntryListItem extends StatelessWidget {
           width: 80,
           child: Text(
             rollEntry.player,
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-              color: PlayerColourizer.getTextColor(rollEntry.player),
-            ),
+            style: Theme.of(context).textTheme.bodyText1.copyWith(
+                  fontWeight: FontWeight.bold,
+                  color: PlayerColourizer.getTextColor(rollEntry.player),
+                ),
           ),
         ),
         title: Wrap(
@@ -32,11 +31,10 @@ class RollEntryListItem extends StatelessWidget {
           children: <Widget>[
             Text(
               rollEntry.rolls.join(' '),
-              style: TextStyle(
-                wordSpacing: 15,
-                fontFamily: 'RobotoMono',
-                fontSize: 20,
-              ),
+              style: Theme.of(context).textTheme.bodyText1.copyWith(
+                    wordSpacing: 15,
+                    fontFamily: 'RobotoMono',
+                  ),
             ),
             Container(
               decoration: BoxDecoration(
@@ -45,12 +43,11 @@ class RollEntryListItem extends StatelessWidget {
               padding: const EdgeInsets.all(6.0),
               child: Text(
                 rollEntry.rolls.reduce((a, b) => a + b).toString(),
-                style: TextStyle(
-                  fontFamily: 'RobotoMono',
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20,
-                  color: themeData.backgroundColor,
-                ),
+                style: Theme.of(context).textTheme.bodyText1.copyWith(
+                      fontFamily: 'RobotoMono',
+                      fontWeight: FontWeight.bold,
+                      color: themeData.backgroundColor,
+                    ),
               ),
             ),
           ],

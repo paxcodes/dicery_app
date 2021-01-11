@@ -15,11 +15,13 @@ class RoomScreen extends StatelessWidget {
         child: SafeArea(
           child: Column(
             children: <Widget>[
-              Text('Room $roomCode',
-                  style: Theme.of(context).textTheme.headline1.copyWith(
-                      fontSize: 50,
+              Text(
+                'Room $roomCode',
+                style: Theme.of(context).textTheme.headline1.copyWith(
                       fontFamily: 'RobotoMono',
-                      fontWeight: FontWeight.bold)),
+                      fontWeight: FontWeight.bold,
+                    ),
+              ),
               Text(
                 'by $roomOwner',
                 style: Theme.of(context).textTheme.subtitle1,

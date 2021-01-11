@@ -43,11 +43,10 @@ class DiceryIconButton extends StatelessWidget {
         ),
         label: Text(
           label,
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 20,
-            color: finalTextColor,
-          ),
+          style: Theme.of(context).textTheme.bodyText1.copyWith(
+                fontWeight: FontWeight.bold,
+                color: finalTextColor,
+              ),
         ),
       ),
     );

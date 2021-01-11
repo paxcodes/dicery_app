@@ -32,7 +32,9 @@ class _DiceCountFormState extends State<DiceCountForm> {
           children: <Widget>[
             Text(
               '# of Dice',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              style: Theme.of(context).textTheme.bodyText1.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
             ),
             SizedBox(
               width: 20,
