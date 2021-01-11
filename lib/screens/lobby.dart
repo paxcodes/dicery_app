@@ -7,6 +7,9 @@ class LobbyScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Map<String, dynamic> args = ModalRoute.of(context).settings.arguments;
+    final bool isOwnedByUser = args['isOwnedByUser'];
+    final String roomOwner = args['roomOwner'];
+    final String roomCode = args['roomCode'];
     final roomCodeContainsEitherZeroOrOh =
         roomCode.contains('0') ^ roomCode.contains('O');
 
