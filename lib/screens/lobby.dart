@@ -1,8 +1,7 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:dicery/components/lobby_stream.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class LobbyScreen extends StatelessWidget {
   @override
@@ -20,7 +19,6 @@ class LobbyScreen extends StatelessWidget {
             children: [
               Text('Room $roomCode',
                   style: Theme.of(context).textTheme.headline1.copyWith(
-                        fontSize: 50,
                         fontFamily: 'RobotoMono',
                         fontWeight: FontWeight.bold,
                       )),
@@ -33,9 +31,8 @@ class LobbyScreen extends StatelessWidget {
                 width: 380,
                 child: TypewriterAnimatedTextKit(
                   text: ['waiting for other players'],
-                  textStyle: Theme.of(context).textTheme.headline6.copyWith(
+                  textStyle: Theme.of(context).textTheme.bodyText1.copyWith(
                         fontFamily: 'RobotoMono',
-                        fontSize: 20,
                         fontWeight: FontWeight.w300,
                       ),
                   speed: Duration(milliseconds: 100),

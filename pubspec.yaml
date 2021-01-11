@@ -22,6 +22,7 @@ dependencies:
   envify: ^1.0.6
   sse: ^3.6.0
   collection: ^1.14.13
+  flutter_screenutil: ^4.0.2+3
 
 dev_dependencies:
   flutter_test:

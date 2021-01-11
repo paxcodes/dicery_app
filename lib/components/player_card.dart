@@ -15,25 +15,23 @@ class PlayerCard extends StatelessWidget {
           padding: const EdgeInsets.only(right: 10.0),
           child: Text(
             emoji,
-            style: TextStyle(
-              fontSize: 35,
-            ),
+            style: Theme.of(context).textTheme.bodyText2,
           ),
         ),
         title: SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           child: Row(
             children: <Widget>[
-              Text(name[0],
-                  style: TextStyle(
-                    fontSize: 50,
-                    fontWeight: FontWeight.w500,
-                  )),
+              Text(
+                name[0],
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyText2
+                    .copyWith(fontWeight: FontWeight.w500),
+              ),
               Text(
                 name.substring(1),
-                style: TextStyle(
-                  fontSize: 35,
-                ),
+                style: Theme.of(context).textTheme.bodyText1,
               ),
             ],
           ),
