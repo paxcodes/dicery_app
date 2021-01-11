@@ -7,9 +7,8 @@ class LobbyScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Map<String, dynamic> args = ModalRoute.of(context).settings.arguments;
-    final bool isOwnedByUser = args['isOwnedByUser'];
-    final String roomOwner = args['roomOwner'];
-    final String roomCode = args['roomCode'];
+    final roomCodeContainsEitherZeroOrOh =
+        roomCode.contains('0') ^ roomCode.contains('O');
 
     return Material(
       child: Padding(
@@ -22,10 +21,13 @@ class LobbyScreen extends StatelessWidget {
                         fontFamily: 'RobotoMono',
                         fontWeight: FontWeight.bold,
                       )),
-              Text(
-                'by $roomOwner',
-                style: Theme.of(context).textTheme.subtitle1,
-              ),
+              if (roomCodeContainsEitherZeroOrOh)
+                Text(
+                  '0 is zero; O is the letter',
+                  style: Theme.of(context).textTheme.subtitle1.copyWith(
+                        fontFamily: 'RobotoMono',
+                      ),
+                ),
               SizedBox(height: 50),
               SizedBox(
                 width: 250,
