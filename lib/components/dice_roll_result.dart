@@ -14,7 +14,7 @@ class DiceRollResult extends StatelessWidget {
       child: _diceRolls == null
           ? Center(
               child: Text(
-              'You have not rolled yet.',
+              '',
               style: themeData.textTheme.bodyText1,
             ))
           : Wrap(
