@@ -53,7 +53,10 @@ class RollEntryListItem extends StatelessWidget {
           ],
         ),
         subtitle: Timeago(
-          builder: (_, value) => Text(value),
+          builder: (_, value) => Text(
+            value,
+            style: TextStyle(fontSize: 12),
+          ),
           date: rollEntry.date,
         ),
       ),
