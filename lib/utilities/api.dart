@@ -81,6 +81,32 @@ class DiceryApi {
     return Room.fromJson(jsonDecode(response.body));
   }
 
+  Future<Room> verifyToken() async {
+    final endpoint = 'token';
+    final requestUrl = Uri.encodeFull('$baseUrl/$endpoint');
+    final response = await _client.get(requestUrl);
+
+    if (response.statusCode == HttpStatus.forbidden ||
+        response.statusCode == HttpStatus.notFound) {
+      throw OperationFailedException(
+        response,
+        plainMsg: "⚠️ You don't have a valid key to join any room."
+            ' Verify with the room owner that the room is still up and'
+            ' make sure you are using the same browser that you used'
+            ' when you joined a room.',
+      );
+    }
+
+    if (HttpHelper.isNotOk(response)) {
+      throw OperationFailedException(
+        response,
+        plainMsg: '🛑 Something went wrong on our end. Try again later.',
+      );
+    }
+
+    return Room.fromJson(jsonDecode(response.body));
+  }
+
   dynamic joinLobby(String roomCode) async {
     final endpoint = 'lobby/$roomCode';
     final requestUrl = Uri.encodeFull('$baseUrl/$endpoint');
