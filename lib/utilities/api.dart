@@ -10,7 +10,7 @@ import 'package:sse/client/sse_client.dart';
 
 class DiceryApi {
   static String _cookie = '';
-  static const String baseUrl = 'https://stag.api.dicery.margret.pw';
+  static const String baseUrl = 'https://api.dicery.margret.pw';
   static dynamic _client;
 
   DiceryApi() {
