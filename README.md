@@ -34,9 +34,7 @@ Assuming you have [flutter](https://flutter.dev/docs/get-started/install) alread
 
 If you are interested in this project, (there _are_ a lot of UI bugs), feel free to make a PR. 
 
-If you want to contribute but don't know flutter, I know a couple [resources](#learning-flutter).
-
-Also, [ResoCoder](https://resocoder.com/) and [FilledStacks](https://www.filledstacks.com/) are great resources.
+If you want to contribute but don't know flutter, I know a couple [resources](#learning-flutter) for learning flutter. 🤓
 
 ### Tests
 
@@ -44,13 +42,15 @@ I'm focusing lately on Python and so you'd notice there aren't any existing test
 
 ## Learning Flutter
 
-If you're interested in learning Flutter, appbrewery.co has an affordable course on Flutter. 
-
 Sometimes [Google](https://flutter.dev/) provides a free basic video course so you might want to subscribe to their newsletter.
 
 [Flutter's official YouTube channel](https://www.youtube.com/channel/UCwXdFgeE9KYzlDdR7TG9cMw) is very informative. 
 
-And there's a "5-hour Flutter Crash Course for Beginners 2021" in [YouTube](https://www.youtube.com/watch?v=x0uinJvhNxI). 🥳
+There's a "5-hour Flutter Crash Course for Beginners 2021" in [YouTube](https://www.youtube.com/watch?v=x0uinJvhNxI). 🥳
+
+There's [ResoCoder](https://resocoder.com/) and [FilledStacks](https://www.filledstacks.com/) that provide very informative tutorials and videos for free.
+
+appbrewery.co has an affordable course on Flutter if you want something more systematic and guided; they have a Discord community where you can get a lot of help once you enroll.
 
 ## License
 
