@@ -16,7 +16,7 @@ A flutter app to roll the dice with your friends. This is useful when remotely p
 
 <p align="center">Made with <a href="https://flutter.dev">Flutter</a> | Frontend deployed in Netlify | API deployed in AWS EC2 instance | Set up CI/CD using <a href="https://buddy.works">buddy.works</a></p>
 
-<p align="center">Because registering in app stores are expensive, it's currently deployed as a web app: <a href="https://dicery.margret.pw">dicery.margret.pw</a></p>
+<p align="center" style="text-decoration:strikethrough;">Because registering in app stores are expensive, it's currently deployed as a web app: <a href="https://dicery.margret.pw">dicery.margret.pw</a></p> _Due to hosting costs, the web app has been shut down._
 
 ## How to Use
 
